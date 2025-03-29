@@ -1,0 +1,303 @@
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #0a2463;
+  padding: 15px 0;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.brand-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.navbar-nav .nav-link {
+  color: white;
+  margin: 0 15px;
+  font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.auth-buttons .btn {
+  border-radius: 4px;
+  padding: 6px 20px;
+  font-weight: 500;
+}
+
+/* Hero Section Styles */
+.hero {
+  background-image: url("./assets/topImage.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: white;
+  z-index: 1;
+}
+
+/* .hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 20, 50, 0.2),
+    rgba(0, 10, 30, 0.3)
+  );
+  z-index: 0;
+} */
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding-left: 50px;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  position: relative;
+  z-index: 2;
+}
+
+.action-buttons .btn {
+  margin-top: 150px;
+  padding: 12px 28px;
+  font-weight: 600;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  position: relative; /* Make sure buttons are on top */
+  z-index: 3 !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.btn-book {
+  background-color: #e71d36 !important;
+  color: white !important;
+  border: none;
+  box-shadow: 0px 4px 8px rgba(231, 29, 54, 0.3);
+}
+
+.btn-book:hover {
+  background-color: #c41228 !important;
+  box-shadow: 0px 6px 12px rgba(231, 29, 54, 0.5);
+}
+
+.btn-manage,
+.btn-promo {
+  background-color: #0a2463 !important;
+  color: white !important;
+  border: none;
+  box-shadow: 0px 4px 8px rgba(10, 36, 99, 0.3);
+}
+
+.btn-manage:hover,
+.btn-promo:hover {
+  background-color: #071a4a !important;
+  box-shadow: 0px 6px 12px rgba(10, 36, 99, 0.5);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .navbar-nav {
+    margin: 15px 0;
+  }
+
+  .auth-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .hero-content {
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-buttons .btn {
+    width: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .tagline {
+    font-size: 1.2rem;
+  }
+}
+
+/* Booking Form Styles */
+.booking-form {
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-top: -100px;
+  position: relative;
+  z-index: 2;
+  color: #333;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.booking-form .form-group {
+  margin-bottom: 20px;
+}
+
+.booking-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.booking-form .form-control {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.booking-form .form-select {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.booking-form .trip-type {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.booking-form .trip-type label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.booking-form .trip-type input {
+  margin-right: 8px;
+}
+
+.booking-form .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+
+.booking-form .col {
+  flex: 1;
+  padding: 0 10px;
+  min-width: 200px;
+}
+
+.search-btn {
+  background-color: #0a2463;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+  background-color: #071a4a;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .navbar-nav {
+    margin: 15px 0;
+  }
+
+  .auth-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .hero-content {
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-buttons .btn {
+    width: 200px;
+  }
+
+  .booking-form .row {
+    flex-direction: column;
+  }
+
+  .booking-form .col {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .tagline {
+    font-size: 1.2rem;
+  }
+}
