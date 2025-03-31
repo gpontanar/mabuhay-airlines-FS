@@ -25,9 +25,6 @@ const BookingForm = () => {
     })
   }
 
-
-
-
   return (
     <div>
        <div className="booking-form">
@@ -169,4 +166,4 @@ const BookingForm = () => {
   )
 }
 
-export default BookingForm
+export default BookingForm;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Hero = () => {
   return (
@@ -7,7 +7,7 @@ const Hero = () => {
         <div className="container">
           <div className="hero-content">
             <h1>Mabuhay Airline</h1>
-            <p className="tagline">Embracing the skies with you.</p>
+            <p className="tagline">Turning Travel Dreams into Destinations</p>
 
             <div className="action-buttons">
               <button className="btn btn-book">Book Flights</button>
@@ -21,4 +21,4 @@ const Hero = () => {
   )
 }
 
-export default Hero
+export default Hero;

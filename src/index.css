@@ -301,3 +301,97 @@ body {
     font-size: 1.2rem;
   }
 }
+
+/* Footer Styles */
+.footer {
+  background-color: #0a2463;
+  color: white;
+  padding: 40px 20px;
+}
+
+.footer-logo-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.footer-logo-section .logo {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.footer-links-section h6 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.footer-links-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links-section ul li {
+  margin-bottom: 5px;
+}
+
+.footer-links-section ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-links-section ul li a:hover {
+  text-decoration: underline;
+}
+
+.social-icons {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.social-icons a {
+  color: white;
+  margin: 0 10px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.social-icons a:hover {
+  color: #e71d36;
+}
+
+.copyright {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* Responsive Styles for Footer */
+@media (max-width: 768px) {
+  .footer-links-section {
+    text-align: center;
+  }
+
+  .footer-links-section .row {
+    flex-direction: column; /* Stack columns vertically */
+  }
+
+  .footer-links-section .col-sm-3 {
+    margin-bottom: 20px; /* Add spacing between sections */
+  }
+
+  .footer-logo-section {
+    text-align: center;
+    margin-bottom: 20px; /* Add spacing below the logo section */
+  }
+
+  .social-icons {
+    margin: 20px 0;
+    text-align: center; /* Center-align social icons */
+  }
+
+  .copyright {
+    text-align: center; /* Center-align copyright text */
+    margin-top: 20px;
+  }
+}
