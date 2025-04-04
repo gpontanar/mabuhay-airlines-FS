@@ -488,3 +488,41 @@ body {
   background-color: #d90429; /* Change to red on hover */
 }
 
+/* Destination Modal */
+.destination-modal .modal-content {
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 900px; /* Adjust the width of the modal */
+  margin: auto;
+}
+
+.destination-modal .modal-header {
+  background-color: #0a2463;
+  color: white;
+  border: none;
+}
+
+.destination-modal .modal-body {
+  padding: 0;
+}
+
+.destination-carousel .carousel-item img {
+  width: 100%;
+  height: 700px; /* Adjust the height of the carousel images */
+  object-fit: cover;
+}
+
+.destination-carousel .carousel-caption {
+  background-color: rgba(10, 36, 99, 0.6); /* Transparent overlay */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  text-align: left;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
