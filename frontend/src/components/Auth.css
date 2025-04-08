@@ -1,8 +1,10 @@
 /* Common styles for both forms */
 
+/* Note: Please use index.css for our web app styling */
+
 /* Basic form container */
-form {
-  max-width: 400px;
+/* form {
+  max-width: 1500px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -25,7 +27,7 @@ form {
 }
 
 /* Button styles */
-button[type="submit"] {
+/* button[type="submit"] {
   padding: 10px;
   background-color: #0a2463;
   color: white;
@@ -37,28 +39,28 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #d90429;
-}
+}  */
 
 /* Input and button layout */
-.row {
+/* .row {
   margin-bottom: 15px;
 }
 
 .col {
   padding-right: 10px;
   padding-left: 10px;
-}
+} */
 
 /* Styling for success message */
-.success-message {
+/* .success-message {
   color: green;
   font-size: 16px;
   margin-bottom: 20px;
   text-align: center;
-}
+} */
 
 /* Responsive design */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   form {
     padding: 15px;
     width: 100%;
@@ -68,10 +70,10 @@ button[type="submit"]:hover {
     padding-left: 5px;
     padding-right: 5px;
   }
-}
+} */
 
 /* Login-specific styles */
-.login-form .form-control {
+/* .login-form .form-control {
   background-color: #eef1f6;
 }
 
@@ -81,10 +83,10 @@ button[type="submit"]:hover {
 
 .login-form button[type="submit"]:hover {
   background-color: #0056b3;
-}
+} */
 
 /* Sign Up-specific styles */
-.signup-form .form-control {
+/* .signup-form .form-control {
   background-color: #f1f7e7;
 }
 
@@ -94,4 +96,4 @@ button[type="submit"]:hover {
 
 .signup-form button[type="submit"]:hover {
   background-color: #218838;
-}
+} */

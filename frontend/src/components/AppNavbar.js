@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { Link, NavLink } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "../index.css"
 import airlinelogo from '../assets/airlinelogo.jpg'
 import { Modal, Button } from 'react-bootstrap';
@@ -26,7 +27,7 @@ export default function AppNavbar() {
               <span className="brand-text">Mabuhay Airline</span>
             </a>
 
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
 
@@ -57,22 +58,22 @@ export default function AppNavbar() {
 
       {/* Login Modal */}
       <Modal show={showLogin} onHide={() => setShowLogin(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Login</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <Login closeModal={() => setShowLogin(false)} />
-  </Modal.Body>
-</Modal>
+       <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+       </Modal.Header>
+          <Modal.Body>
+            <Login closeModal={() => setShowLogin(false)} />
+          </Modal.Body>
+      </Modal>
 
-<Modal show={showSignUp} onHide={() => setShowSignUp(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Sign Up</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <SignUpModal closeModal={() => setShowSignUp(false)} />
-  </Modal.Body>
-</Modal>
+      <Modal show={showSignUp} onHide={() => setShowSignUp(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign Up</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <SignUpModal closeModal={() => setShowSignUp(false)} />
+        </Modal.Body>
+      </Modal>
 
     </>
   );

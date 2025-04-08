@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import './Auth.css';
+import '../index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({

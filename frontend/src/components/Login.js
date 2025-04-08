@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
-import './Auth.css';
+// import './Auth.css';
+import '../index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = ({ closeModal }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });

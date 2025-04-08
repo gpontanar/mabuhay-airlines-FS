@@ -24,8 +24,10 @@ body {
 
 .navbar-nav .nav-link {
   color: white;
-  margin: 0 15px;
+  margin: 0 15px; 
   font-weight: 500;
+  align-items: center;
+  align-self: center;
 }
 
 .navbar-nav .nav-link:hover {
@@ -38,6 +40,28 @@ body {
   font-weight: 500;
 }
 
+@media (max-width: 576px) {
+  .navbar-nav {
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+    align-items: center; /* Center align links */
+    text-align: center; /* Center text */
+    gap: 15px; /* Add spacing between links */
+  }
+
+  .auth-buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center align buttons */
+    gap: 10px; /* Add spacing between buttons */
+    margin-top: 20px; /* Add spacing above the buttons */
+  }
+
+  .auth-buttons .btn {
+    width: 80%; /* Make buttons take up most of the screen width */
+    text-align: center;
+  }
+}
 /* Hero Section Styles */
 .hero {
   background-image: url("./assets/topImage.jpg");
@@ -51,31 +75,19 @@ body {
   z-index: 1;
 }
 
-/* .hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 20, 50, 0.2),
-    rgba(0, 10, 30, 0.3)
-  );
-  z-index: 0;
-} */
+
 
 .hero-content {
   position: relative;
   z-index: 2;
-  padding-left: 50px;
+  padding-left: 0;
 }
 
 .hero h1 {
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 10px;
+  display: flex; 
 }
 
 .tagline {
@@ -83,222 +95,66 @@ body {
   margin-bottom: 40px;
 }
 
+@media (max-width: 992px) {
+  .hero {
+    background-image: url("./assets/topImage.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: white;
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2; /* Ensure it is below the action buttons */
+  }
+}
+/* Action Buttons */
 .action-buttons {
+  position: absolute; /* Float above the booking form */
+  top: 73%; /* Adjust to position above the form */
+  left: 24.5%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center alignment */
   display: flex;
-  gap: 15px;
-  position: relative;
-  z-index: 2;
+  gap: 20px; /* Space between buttons */
+  z-index: 3; /* Ensure it appears above other elements */
 }
 
 .action-buttons .btn {
-  margin-top: 150px;
   padding: 12px 28px;
   font-weight: 600;
   border-radius: 6px;
   font-size: 16px;
   transition: all 0.3s ease-in-out;
-  position: relative; /* Make sure buttons are on top */
-  z-index: 3 !important;
-  opacity: 1 !important;
-  filter: none !important;
-}
-
-.btn-book {
-  background-color: #d90429 !important;
-  color: white !important;
-  border: none;
-  box-shadow: 0px 4px 8px rgba(231, 29, 54, 0.3);
-}
-
-.btn-book:hover {
-  background-color: #d90429 !important;
-  box-shadow: 0px 6px 12px rgba(231, 29, 54, 0.5);
-}
-
-.btn-manage,
-.btn-promo {
-  background-color: #0a2463 !important;
-  color: white !important;
+  background-color: #0a2463;
+  color: white;
   border: none;
   box-shadow: 0px 4px 8px rgba(10, 36, 99, 0.3);
 }
 
-.btn-manage:hover,
-.btn-promo:hover {
-  background-color: #071a4a !important;
-  box-shadow: 0px 6px 12px rgba(10, 36, 99, 0.5);
-}
-
-/* Responsive Styles */
-@media (max-width: 992px) {
-  .navbar-nav {
-    margin: 15px 0;
-  }
-
-  .auth-buttons {
-    margin-top: 15px;
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  .hero-content {
-    text-align: center;
-    padding-left: 0;
-  }
-
-  .action-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .action-buttons .btn {
-    width: 200px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .tagline {
-    font-size: 1.2rem;
-  }
-}
-
-/* Booking Form Styles */
-.booking-form {
-  background-color: white;
-  border-radius: 8px;
-  padding: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  margin-top: -100px;
-  position: relative;
-  z-index: 2;
-  color: #333;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.booking-form .form-group {
-  margin-bottom: 20px;
-}
-
-.booking-form label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #333;
-}
-
-.booking-form .form-control {
-  width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.booking-form .form-select {
-  width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-}
-
-.booking-form .trip-type {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.booking-form .trip-type label {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.booking-form .trip-type input {
-  margin-right: 8px;
-}
-
-.booking-form .row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -10px;
-}
-
-.booking-form .col {
-  flex: 1;
-  padding: 0 10px;
-  min-width: 200px;
-}
-
-.search-btn {
-  background-color: #0a2463;
+.action-buttons .btn:hover {
+  background-color: #d90429;
   color: white;
-  border: none;
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  box-shadow: 0px 6px 12px rgba(231, 29, 54, 0.5);
 }
-
-.search-btn:hover {
-  background-color: #071a4a;
-}
-
-/* Responsive Styles */
 @media (max-width: 992px) {
-  .navbar-nav {
-    margin: 15px 0;
-  }
-
-  .auth-buttons {
-    margin-top: 15px;
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  .hero-content {
-    text-align: center;
-    padding-left: 0;
-  }
-
   .action-buttons {
-    flex-direction: column;
-    align-items: center;
+    position: static; /* Remove absolute positioning for mobile */
+    transform: none; /* Reset transform */
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center align buttons */
+    gap: 10px; /* Reduce gap between buttons */
+    z-index: 2; 
+    margin-top: -15px;  
   }
 
   .action-buttons .btn {
-    width: 200px;
-  }
-
-  .booking-form .row {
-    flex-direction: column;
-  }
-
-  .booking-form .col {
-    margin-bottom: 15px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .tagline {
-    font-size: 1.2rem;
+    width: 80%; /* Make buttons take up most of the screen width */
+    text-align: center;
   }
 }
 
@@ -367,7 +223,7 @@ body {
 }
 
 /* Responsive Styles for Footer */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .footer-links-section {
     text-align: center;
   }
@@ -525,4 +381,164 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+
+/* Responsive Styles for Booking Form */
+@media (max-width: 992px) {
+  .booking-form .row {
+    flex-direction: column;
+  }
+
+  .booking-form .col {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .booking-form {
+    padding: 20px;
+  }
+
+  .booking-form .form-control,
+  .booking-form .form-select {
+    font-size: 14px;
+  }
+
+  .search-btn {
+    font-size: 14px;
+    padding: 12px;
+    align-self: center;
+  } 
+} 
+
+/* Common styles for both forms */
+
+.booking-form-container{
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-top: -100px;
+  position: relative;
+  z-index: 2;
+  color: #333;
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+  flex: 1; 
+}
+
+.search-btn {
+  background-color: #0a2463;
+  color: white;
+  border: none; 
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  width: 50%;
+  margin: 0 auto;
+  transition: background-color 0.3s;
+}
+
+/* Basic form container */
+form {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: #5cb85c;
+  outline: none;
+}
+
+/* Button styles */
+button[type="submit"] {
+  padding: 10px;
+  background-color: #0a2463;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #d90429;
+}
+
+/* Input and button layout */
+.row {
+  margin-bottom: 15px;
+}
+
+.col {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+/* Styling for success message */
+.success-message {
+  color: green;
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  form {
+    padding: 15px;
+    width: 100%;
+  }
+
+  .col {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+/* Login-specific styles */
+.login-form .form-control {
+  background-color: #eef1f6;
+}
+
+.login-form button[type="submit"] {
+  background-color: #007bff;
+}
+
+.login-form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Sign Up-specific styles */
+.signup-form .form-control {
+  background-color: #f1f7e7;
+}
+
+.signup-form button[type="submit"] {
+  background-color: #28a745;
+}
+
+.signup-form button[type="submit"]:hover {
+  background-color: #218838;
+}
+
 
