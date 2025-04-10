@@ -32,8 +32,8 @@ const BookingForm = () => {
     <div className="booking-form-container">
       <div className="booking-form">
         <form onSubmit={handleSubmit}>
-          <div className="trip-type mb-3 pr-3">
-            <label>
+          <div className="trip-type mb-3">
+            <label className="radio-label">
               <input
                 type="radio"
                 name="tripType"
@@ -43,7 +43,7 @@ const BookingForm = () => {
               />
               One Way 
             </label>
-            <label>
+            <label className="radio-label">
               <input
                 type="radio"
                 name="tripType"
