@@ -7,6 +7,9 @@ import Home from "./pages/Home";
 import Login from './components/Login';
 import SignUpModal from './components/SignUp';
 import Navbar from './components/AppNavbar';
+import BookingForm from './components/BookingForm';
+import SearchResults from './components/SearchResults';
+
 
 function App() {
   return (
@@ -15,6 +18,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUpModal />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<BookingForm/>} />
+        <Route path="/results" element={<SearchResults/>} />
      
       </Routes>
     </Router>

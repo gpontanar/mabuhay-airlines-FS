@@ -18,11 +18,12 @@ const SignUpForm = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:4000/api/users/signup', {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
       if (res.ok) {
         alert('Registration successful!');

@@ -24,7 +24,7 @@ body {
 
 .navbar-nav .nav-link {
   color: white;
-  margin: 0 15px; 
+  margin: 0 15px;
   font-weight: 500;
   align-items: center;
   align-self: center;
@@ -43,25 +43,26 @@ body {
 @media (max-width: 576px) {
   .navbar-nav {
     display: flex;
-    flex-direction: column; /* Stack links vertically */
-    align-items: center; /* Center align links */
-    text-align: center; /* Center text */
-    gap: 15px; /* Add spacing between links */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
   }
 
   .auth-buttons {
     display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center; /* Center align buttons */
-    gap: 10px; /* Add spacing between buttons */
-    margin-top: 20px; /* Add spacing above the buttons */
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
   }
 
   .auth-buttons .btn {
-    width: 80%; /* Make buttons take up most of the screen width */
+    width: 80%;
     text-align: center;
   }
 }
+
 /* Hero Section Styles */
 .hero {
   background-image: url("./assets/topImage.jpg");
@@ -75,8 +76,6 @@ body {
   z-index: 1;
 }
 
-
-
 .hero-content {
   position: relative;
   z-index: 2;
@@ -87,7 +86,7 @@ body {
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 10px;
-  display: flex; 
+  display: flex;
 }
 
 .tagline {
@@ -97,30 +96,23 @@ body {
 
 @media (max-width: 992px) {
   .hero {
-    background-image: url("./assets/topImage.jpg");
-    background-size: cover;
-    background-position: center;
     height: 80vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    color: white;
-    z-index: 1;
   }
+
   .hero-content {
-    position: relative;
-    z-index: 2; /* Ensure it is below the action buttons */
+    z-index: 2;
   }
 }
+
 /* Action Buttons */
 .action-buttons {
-  position: absolute; /* Float above the booking form */
-  top: 73%; /* Adjust to position above the form */
-  left: 24.5%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Center alignment */
+  position: absolute;
+  top: 73%;
+  left: 24.5%;
+  transform: translate(-50%, -50%);
   display: flex;
-  gap: 20px; /* Space between buttons */
-  z-index: 3; /* Ensure it appears above other elements */
+  gap: 20px;
+  z-index: 3;
 }
 
 .action-buttons .btn {
@@ -128,11 +120,11 @@ body {
   font-weight: 600;
   border-radius: 6px;
   font-size: 16px;
-  transition: all 0.3s ease-in-out;
   background-color: #0a2463;
   color: white;
   border: none;
   box-shadow: 0px 4px 8px rgba(10, 36, 99, 0.3);
+  transition: all 0.3s ease-in-out;
 }
 
 .action-buttons .btn:hover {
@@ -140,20 +132,20 @@ body {
   color: white;
   box-shadow: 0px 6px 12px rgba(231, 29, 54, 0.5);
 }
+
 @media (max-width: 992px) {
   .action-buttons {
-    position: static; /* Remove absolute positioning for mobile */
-    transform: none; /* Reset transform */
-    display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center; /* Center align buttons */
-    gap: 10px; /* Reduce gap between buttons */
-    z-index: 2; 
-    margin-top: -15px;  
+    position: static;
+    transform: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 2;
+    margin-top: -15px;
   }
 
   .action-buttons .btn {
-    width: 80%; /* Make buttons take up most of the screen width */
+    width: 80%;
     text-align: center;
   }
 }
@@ -222,38 +214,31 @@ body {
   font-size: 14px;
 }
 
-/* Responsive Styles for Footer */
 @media (max-width: 992px) {
   .footer-links-section {
     text-align: center;
   }
 
   .footer-links-section .row {
-    flex-direction: column; /* Stack columns vertically */
+    flex-direction: column;
   }
 
   .footer-links-section .col-sm-3 {
-    margin-bottom: 20px; /* Add spacing between sections */
+    margin-bottom: 20px;
   }
 
   .footer-logo-section {
-    text-align: center;
-    margin-bottom: 20px; /* Add spacing below the logo section */
-  }
-
-  .social-icons {
-    margin: 20px 0;
-    text-align: center; /* Center-align social icons */
+    margin-bottom: 20px;
   }
 
   .copyright {
-    text-align: center; /* Center-align copyright text */
+    text-align: center;
     margin-top: 20px;
   }
 }
 
-/* Image Cards Section for Popular Destination*/
- .overlay-heading {
+/* Image Cards Section */
+.overlay-heading {
   position: relative;
   text-align: center;
   color: white;
@@ -266,8 +251,7 @@ body {
   padding: 10px 20%;
   border-radius: 5px;
   font-size: 2rem;
-} 
-
+}
 
 .image-cards-section {
   background-size: cover;
@@ -277,31 +261,30 @@ body {
 
 .image-card {
   position: relative;
-  height: 700px; /* Increased height for larger images */
+  height: 700px;
   background-size: cover;
   background-position: center;
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 30px;
-  transition: transform 0.3s ease-in-out; /* Add zoom effect */
+  transition: transform 0.3s ease-in-out;
 }
 
 .image-card:hover {
-  transform: scale(1.05); /* Zoom effect on hover */
+  transform: scale(1.05);
 }
 
 .card-overlay {
   position: absolute;
-  bottom: 0; /* Overlay starts from the bottom */
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 30%; /* Overlay covers the bottom half */
-  background: rgba(10, 36, 99, 0.6); /* Blue transparent overlay */
+  height: 30%;
+  background: rgba(10, 36, 99, 0.6);
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: left;
   text-align: left;
   padding: 20px;
 }
@@ -324,31 +307,23 @@ body {
   transition: background-color 0.3s ease-in-out;
 }
 
-.card-buttons .btn-primary {
-  background-color: #0a2463;
-  color: white;
-  border: none;
-}
-
-.card-buttons .btn-primary:hover {
-  background-color: #d90429; /* Change to red on hover */
-}
-
+.card-buttons .btn-primary,
 .card-buttons .btn-secondary {
   background-color: #0a2463;
   color: white;
   border: none;
 }
 
+.card-buttons .btn-primary:hover,
 .card-buttons .btn-secondary:hover {
-  background-color: #d90429; /* Change to red on hover */
+  background-color: #d90429;
 }
 
 /* Destination Modal */
 .destination-modal .modal-content {
   border-radius: 10px;
   overflow: hidden;
-  max-width: 900px; /* Adjust the width of the modal */
+  max-width: 900px;
   margin: auto;
 }
 
@@ -364,12 +339,12 @@ body {
 
 .destination-carousel .carousel-item img {
   width: 100%;
-  height: 700px; /* Adjust the height of the carousel images */
+  height: 700px;
   object-fit: cover;
 }
 
 .destination-carousel .carousel-caption {
-  background-color: rgba(10, 36, 99, 0.6); /* Transparent overlay */
+  background-color: rgba(10, 36, 99, 0.6);
   bottom: 0;
   left: 0;
   right: 0;
@@ -382,37 +357,8 @@ body {
   border-top-right-radius: 10px;
 }
 
-/* Responsive Styles for Booking Form */
-@media (max-width: 992px) {
-  .booking-form .row {
-    flex-direction: column;
-  }
-
-  .booking-form .col {
-    margin-bottom: 15px;
-  }
-}
-
-@media (max-width: 992px) {
-  .booking-form {
-    padding: 20px;
-  }
-
-  .booking-form .form-control,
-  .booking-form .form-select {
-    font-size: 14px;
-  }
-
-  .search-btn {
-    font-size: 14px;
-    padding: 12px;
-    align-self: center;
-  } 
-} 
-
-/* Common styles for both forms */
-
-.booking-form-container{
+/* Booking Form */
+.booking-form-container {
   background-color: white;
   border-radius: 8px;
   padding: 30px;
@@ -424,19 +370,20 @@ body {
   max-width: 1500px;
   margin-left: auto;
   margin-right: auto;
-  flex: 1; 
+  flex: 1;
 }
+
 .trip-type .radio-label {
-  margin-right: 20px; 
+  margin-right: 20px;
   display: inline-flex;
   align-items: center;
-  gap: 5px; 
+  gap: 5px;
 }
 
 .search-btn {
   background-color: #0a2463;
   color: white;
-  border: none; 
+  border: none;
   padding: 12px;
   font-size: 16px;
   font-weight: 600;
@@ -451,7 +398,11 @@ body {
   transition: background-color 0.3s;
 }
 
-/* Basic form container */
+.search-btn:hover {
+  background-color: #d90429;
+}
+
+/* Form Basics */
 form {
   max-width: 1500px;
   margin: 0 auto;
@@ -475,7 +426,6 @@ form {
   outline: none;
 }
 
-/* Button styles */
 button[type="submit"] {
   padding: 10px;
   background-color: #0a2463;
@@ -490,17 +440,6 @@ button[type="submit"]:hover {
   background-color: #d90429;
 }
 
-/* Input and button layout */
-.row {
-  margin-bottom: 15px;
-}
-
-.col {
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
-/* Styling for success message */
 .success-message {
   color: green;
   font-size: 16px;
@@ -508,7 +447,32 @@ button[type="submit"]:hover {
   text-align: center;
 }
 
-/* Responsive design */
+/* Responsive Form */
+@media (max-width: 992px) {
+  .booking-form .row {
+    flex-direction: column;
+  }
+
+  .booking-form .col {
+    margin-bottom: 15px;
+  }
+
+  .booking-form {
+    padding: 20px;
+  }
+
+  .form-control,
+  .form-select {
+    font-size: 14px;
+  }
+
+  .search-btn {
+    font-size: 14px;
+    padding: 12px;
+    align-self: center;
+  }
+}
+
 @media (max-width: 768px) {
   form {
     padding: 15px;
@@ -521,7 +485,7 @@ button[type="submit"]:hover {
   }
 }
 
-/* Login-specific styles */
+/* Login-Specific Styles */
 .login-form .form-control {
   background-color: #eef1f6;
 }
@@ -534,7 +498,7 @@ button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-/* Sign Up-specific styles */
+/* Signup-Specific Styles */
 .signup-form .form-control {
   background-color: #f1f7e7;
 }
@@ -547,4 +511,131 @@ button[type="submit"]:hover {
   background-color: #218838;
 }
 
+/* Flight Card Styles */
+.flight-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(10, 36, 99, 0.1);
+  transition: transform 0.3s ease;
+}
 
+.flight-card:hover {
+  transform: translateY(-5px);
+}
+
+.flight-card-header {
+  background-color: #f7f9fc;
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #e6ecf0;
+}
+
+.flight-card-header img {
+  max-width: 150px;
+  max-height: 50px;
+  object-fit: contain;
+}
+
+.flight-card-body {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.flight-card-body .card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0a2463;
+}
+
+.flight-card-body .card-text {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.flight-card-body .btn {
+  background-color: #0a2463;
+  color: white;
+  font-weight: 500;
+  border: none;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.flight-card-body .btn:hover {
+  background-color: #d90429;
+}
+
+
+/* Badge Styles */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.badge-economy {
+  background-color: #007bff;
+}
+
+.badge-business {
+  background-color: #28a745;
+}
+
+.badge-first {
+  background-color: #6f42c1;
+}
+
+.badge-low {
+  background-color: #dc3545;
+  margin-left: 8px;
+}
+
+/* Price Tag */
+.price-tag {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #0a2463;
+}
+
+/* Optional animation on hover */
+.flight-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Button hover animation */
+.btn {
+  background-color: #0a2463;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #003566;
+  transform: scale(1.02);
+}
+
+/* Animate emoji/icons */
+.icon-animate {
+  display: inline-block;
+  animation: float-icon 2s ease-in-out infinite;
+}
+
+@keyframes float-icon {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}

@@ -15,11 +15,12 @@ const Login = ({ closeModal }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:4000/api/users/login', {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
       if (res.ok) {
         alert('Login successful!');
