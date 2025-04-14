@@ -1,3 +1,4 @@
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 /* Global Styles */
 body {
   margin: 0;
@@ -40,7 +41,8 @@ body {
   font-weight: 500;
 }
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) { */
+@media (max-width: 768px) {
   .navbar-nav {
     display: flex;
     flex-direction: column;
@@ -94,7 +96,8 @@ body {
   margin-bottom: 40px;
 }
 
-@media (max-width: 992px) {
+/* @media (max-width: 992px) { */
+@media (max-width: 768px) {
   .hero {
     height: 80vh;
   }
@@ -133,20 +136,28 @@ body {
   box-shadow: 0px 6px 12px rgba(231, 29, 54, 0.5);
 }
 
-@media (max-width: 992px) {
+/* @media (max-width: 992px) { */
+@media (max-width: 768px) {
   .action-buttons {
     position: static;
     transform: none;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    z-index: 2;
+    z-index: 1;
     margin-top: -15px;
   }
 
   .action-buttons .btn {
     width: 80%;
     text-align: center;
+    padding: 15px 20px;
+    z-index: 1;
+  }
+
+  .btn-promo{
+    z-index: 1;
+    margin-bottom: 105px;
   }
 }
 
@@ -154,88 +165,137 @@ body {
 .footer {
   background-color: #0a2463;
   color: white;
-  padding: 40px 20px;
+  padding: 50px 10% 20px;
+  align-content: center;
+  align-items: center;
 }
 
-.footer-logo-section {
-  text-align: center;
+/* .footer-logo-section {
+  height: 50px;
+  height: 50px;
   margin-bottom: 20px;
-}
+} */
 
 .footer-logo-section .logo {
   width: 50px;
   height: 50px;
-  margin-bottom: 10px;
+  display: flex;
+  margin-bottom: 5px;
 }
 
 .footer-links-section h6 {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-weight: 600;
+  margin-bottom: 15px;
 }
 
 .footer-links-section ul {
   list-style: none;
   padding: 0;
-}
+  /* display: flex;
+  flex-direction: column;*/
+} 
 
 .footer-links-section ul li {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  /* display: flex;
+  flex-direction: column; */
 }
 
 .footer-links-section ul li a {
   color: white;
   text-decoration: none;
-  font-size: 14px;
+  transition: all 0.3s;
 }
 
 .footer-links-section ul li a:hover {
-  text-decoration: underline;
+  color: #ddd;
 }
 
 .social-icons {
-  text-align: center;
-  margin: 20px 0;
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
 }
 
 .social-icons a {
   color: white;
-  margin: 0 10px;
-  font-size: 20px;
-  text-decoration: none;
+  font-size: 1.2rem;
+  transition: all 0.3s;
 }
 
 .social-icons a:hover {
-  color: #d90429;
+  color: #ddd;
+}
+#socials{
+  text-align: end;
+  display: flex-end; 
+  justify-content: flex-end;
 }
 
 .copyright {
-  margin-top: 20px;
-  font-size: 14px;
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
 }
 
-@media (max-width: 992px) {
-  .footer-links-section {
+/* @media (max-width: 992px) { */
+@media (max-width: 768px) {
+  #socials {
     text-align: center;
+    justify-content: center;
+  }
+  .social-icons h5{
+    justify-content: center;
+    padding-top: 30px;
+    margin-top: 30px;
+  }
+  .social-icons{
+    justify-content: center;
+  }
+  .footer-links-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
   }
 
-  .footer-links-section .row {
-    flex-direction: column;
-  }
+   .footer-links-section .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px; 
+  } 
 
   .footer-links-section .col-sm-3 {
-    margin-bottom: 20px;
+    flex: 0 0 45%;
+    max-width: 45%;
+    
   }
 
   .footer-logo-section {
-    margin-bottom: 20px;
+    height: 40px;
+    margin-bottom: 10px;
+    margin-right: auto;
+    padding-right: 10px;
+    display: flex;
   }
 
   .copyright {
     text-align: center;
     margin-top: 20px;
   }
+  .footer-links {
+    text-align: center;
 }
+
+.footer-links ul{
+    display: block;
+    text-align: center;
+}
+}  
+
 
 /* Image Cards Section */
 .overlay-heading {
@@ -261,7 +321,7 @@ body {
 
 .image-card {
   position: relative;
-  height: 700px;
+  height: 600px;
   background-size: cover;
   background-position: center;
   border-radius: 10px;
@@ -448,7 +508,8 @@ button[type="submit"]:hover {
 }
 
 /* Responsive Form */
-@media (max-width: 992px) {
+/* @media (max-width: 992px) { */
+@media (max-width: 768px) {
   .booking-form .row {
     flex-direction: column;
   }
@@ -474,6 +535,7 @@ button[type="submit"]:hover {
 }
 
 @media (max-width: 768px) {
+/* @media (max-width: 992px) { */
   form {
     padding: 15px;
     width: 100%;
@@ -638,4 +700,94 @@ button[type="submit"]:hover {
   50% {
     transform: translateY(-3px);
   }
+}
+
+
+
+/* Flight Deals Section */
+.flight-deals-section {
+  padding: 50px 20px;
+  background-image: url("./assets/sky-1.jpg");
+  background-size: cover;
+  background-position: center;
+  align-items: center;
+}
+
+.deals-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.deal-card {
+  width: 350px;
+  height: 600px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+  margin-bottom: 30px;
+}
+
+.deal-card:hover {
+  transform: scale(1.05);
+}
+
+.deal-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.deal-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: rgba(211, 22, 22, 0.6);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.deal-card:hover .deal-overlay {
+  opacity: 1;
+}
+
+.deal-overlay h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.deal-overlay p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.book-now-btn {
+  background-color: #0a2463;
+  color: white;
+  border: white;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.book-now-btn:hover {
+  background-color: #d90429; 
+  border-color: white;
+  border-style: solid;
+  border-width: 1px;
 }

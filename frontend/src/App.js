@@ -1,6 +1,6 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {useState, useEffect} from 'react';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 import Home from "./pages/Home";

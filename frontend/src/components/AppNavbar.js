@@ -4,7 +4,8 @@ import Nav from 'react-bootstrap/Nav';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "../index.css"
-import airlinelogo from '../assets/airlinelogo.jpg'
+// import airlinelogo from '../assets/airlinelogo.jpg'
+import airlinelogo from '../assets/mabuhay-logo.png'
 import { Modal, Button } from 'react-bootstrap';
 import Login from './Login';
 import SignUpModal from './SignUp';

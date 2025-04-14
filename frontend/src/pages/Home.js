@@ -3,6 +3,7 @@ import AppNavbar from '../components/AppNavbar';
 import BookingForm from '../components/BookingForm';
 import Hero from '../components/Hero';
 import ImageCards from '../components/ImageCards';
+import FlightDeals from '../components/FlightDeals';
 import Footer from "../components/Footer";
 
 const Home = () => {
@@ -11,7 +12,8 @@ const Home = () => {
       <AppNavbar />
       <Hero />
       <BookingForm />
-      <ImageCards /> 
+      <ImageCards />
+      <FlightDeals />
       <Footer />
     </>
   )
