@@ -31,7 +31,7 @@ const deals = [
 
 const FlightDeals = () => {
   return (
-    <div className="flight-deals-section">
+    <div id="flight-deals-section" className="flight-deals-section">
       <div className="overlay-heading">
         <h1 className="text-center text-white mb-4">Flight Deals!</h1>
       </div>

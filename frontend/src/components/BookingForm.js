@@ -58,7 +58,9 @@ const BookingForm = () => {
       <div className="action-buttons">
         <button className="btn btn-book">Book Flights</button>
         <button className="btn btn-manage">Manage Booking</button>
-        <button className="btn btn-promo">Promo Flights</button>
+        <button className="btn btn-promo" onClick={() => {
+    document.getElementById('flight-deals-section').scrollIntoView({ behavior: 'smooth' });
+  }}>Promo Flights</button>
       </div>
       <div className="booking-form-container">
         <div className="booking-form">
@@ -101,6 +103,12 @@ const BookingForm = () => {
                     <option value="cebu">Cebu</option>
                     <option value="davao">Davao</option>
                     <option value="iloilo">Iloilo</option>
+                    <option value="baguio">Baguio</option>
+                    <option value="palawan">Palawan</option>
+                    <option value="bohol">Bohol</option>
+                    <option value="caticlan">Caticlan</option>
+                    <option value="siargao">Siargao</option>
+
                   </select>
                 </div>
               </div>
@@ -114,10 +122,15 @@ const BookingForm = () => {
                     onChange={(e) => setDestinationCity(e.target.value)}
                   >
                     <option value="">Select City</option>
-                    <option value="singapore">Singapore</option>
-                    <option value="hongkong">Hong Kong</option>
-                    <option value="tokyo">Tokyo</option>
-                    <option value="seoul">Seoul</option>
+                    <option value="manila">Manila</option>
+                    <option value="cebu">Cebu</option>
+                    <option value="davao">Davao</option>
+                    <option value="iloilo">Iloilo</option>
+                    <option value="baguio">Baguio</option>
+                    <option value="palawan">Palawan</option>
+                    <option value="bohol">Bohol</option>
+                    <option value="caticlan">Caticlan</option>
+                    <option value="siargao">Siargao</option>
                   </select>
                 </div>
               </div>

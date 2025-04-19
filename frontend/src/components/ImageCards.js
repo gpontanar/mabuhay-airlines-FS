@@ -113,6 +113,7 @@ const ImageCards = () => {
 
   return (
     <div
+      id="explore-section"
       className="image-cards-section"
       style={{
         backgroundImage: `url(${CenterBImage})`,

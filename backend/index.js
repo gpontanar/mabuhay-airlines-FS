@@ -5,7 +5,7 @@ require('dotenv').config();
 
 
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGODB_STRING)
 
   .then(() => {
     app.listen(process.env.PORT || 4000, () => {
