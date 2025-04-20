@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { fetchFlightsData } from './api'; // API fetch function
+import { fetchFlightsData } from '../api'; // API fetch function
 import FlightCard from './FlightCard';
 
 const SearchResults = () => {

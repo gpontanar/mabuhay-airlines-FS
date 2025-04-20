@@ -1,52 +1,113 @@
 const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-// const auth = require('../auth');
+// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
+const auth = require('../auth');
 
-// const { errorHandler } = auth;
+const { errorHandler } = auth;
 
-exports.signUp = async (req, res) => {
-  try {
-    const { password, confirmPassword } = req.body;
-    if (password !== confirmPassword) {
-      return res.status(400).json({ error: "Passwords do not match" });
-    }
-    const user = new User(req.body);
-    await user.save();
-    res.status(201).json(user);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
+          module.exports.signUp = (req, res) => {
+            const { email, mobileNumber, password } = req.body;
+          
+            // Validate email
+            if (!email || !email.includes("@")) {
+              return res.status(400).send({ message: "Email is invalid or missing" });
+            }
+          
+            // Validate mobile number
+            if (!mobileNumber || mobileNumber.length !== 11) {
+              return res.status(400).send({ message: "Mobile number is invalid or missing" });
+            }
+          
+            // Validate password
+            if (!password || password.length < 8) {
+              return res.status(400).send({ message: "Password must be at least 8 characters long" });
+            }
+          
+            // Hash the password
+            const hashedPassword = bcrypt.hashSync(password, 10);
+          
+            // Create a new user
+            const newUser = new User({
+              firstName: req.body.firstName,
+              lastName: req.body.lastName,
+              prefix: req.body.prefix,
+              gender: req.body.gender,
+              mobileNumber: req.body.mobileNumber,
+              dateOfBirth: req.body.dateOfBirth,
+              address: req.body.address,
+              email: req.body.email,
+              password: hashedPassword,
+            });
+          
+            // Save the user to the database
+            return newUser
+              .save()
+              .then((result) => res.status(201).send({ message: "Registered Successfully", user: result }))
+              .catch((error) => errorHandler(error, req, res));
+          };
+
+          module.exports.login = (req, res) => {
+            if (!req.body.email.includes("@")) {
+                  return res.status(400).send({ error: "Invalid email format" });
+              }
+
+              return User.findOne({ email: req.body.email })
+                  .then(result => {
+                      if (result == null) {
+                          return res.status(404).send({ error: "No Email Found" });
+                      } else {
+                          const isPasswordCorrect = bcrypt.compareSync(req.body.password, result.password);
+                          if (isPasswordCorrect) {
+                              return res.send({ access: auth.createAccessToken(result) });
+                          } else {
+                              return res.status(401).send({ error: "Email and password do not match" });
+                          }
+                      }
+                  })
+                  .catch(error => errorHandler(error, req, res));
+          };
+
+module.exports.getProfile = (req, res) => {
+  return User.findById(req.user.id)
+      .then(user => {
+          if (user) {
+              user.password = "";
+              res.send(user);
+          } else {
+              res.status(404).send({ message: "User not found" });
+          }
+      })
+      .catch(error => errorHandler(error, req, res));
 };
 
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ error: "User not found" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
-
-    res.json({
-      message: "Login successful",
-      user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        mobileNumber: user.mobileNumber
-      }
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+module.exports.setUserAsAdmin = (req, res) => {
+  if (!req.user.isAdmin) {
+      return res.status(403).send({
+          error: "Permission Denied, Only Admin user can change permission."
+      });
   }
+
+  return User.findByIdAndUpdate(req.params.id, { isAdmin: true }, { new: true })
+      .then(user => {
+          if (user) {
+              res.send({ updatedUser: user });
+          } else {
+              const err = new Error('User not found');
+              err.status = 404;
+              err.kind = 'ObjectId';
+              err.value = req.params.id;
+              err.path = '_id';
+              err.name = 'CastError';
+              throw err;
+          }
+      })
+      .catch(error => errorHandler(error, req, res));
 };
 
-exports.getUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+//[SECTION] Update password
+module.exports.updatePassword = (req, res) => {
+  const newPassword = bcrypt.hashSync(req.body.newPassword, 10);
+  return User.findByIdAndUpdate(req.user.id, { password: newPassword }, { new: true })
+  .then(user => res.send({ message: "Password updated successfully" }))
+  .catch(error => errorHandler(error, req, res));
 };
