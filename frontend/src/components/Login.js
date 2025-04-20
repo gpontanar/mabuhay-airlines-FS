@@ -36,19 +36,6 @@ const Login = ({ closeModal, openSignUpModal }) => {
     }
   };
 
-  // return (
-  //   <form onSubmit={handleSubmit}>
-  //     <div className="mb-3">
-  //     <label htmlFor="email" className="form-label">Email: </label>
-  //       <input type="email" name="email" placeholder="Email" className="form-control" onChange={handleChange} required />
-  //     </div>
-  //     <div className="mb-3">
-  //     <label htmlFor="password" className="form-label">Password: </label>
-  //       <input type="password" name="password" placeholder="Password" className="form-control" onChange={handleChange} required />
-  //     </div>
-  //     <button type="submit" className="btn btn-primary w-100">Login</button>
-  //   </form>
-  // );
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
