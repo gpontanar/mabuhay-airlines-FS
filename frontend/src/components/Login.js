@@ -1,12 +1,16 @@
 
 import React, { useState } from 'react';
-// import './Auth.css';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import 'notyf/notyf.min.css';
 import '../index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = ({ closeModal, openSignUpModal }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -24,15 +28,36 @@ const Login = ({ closeModal, openSignUpModal }) => {
 
       const data = await res.json();
       if (res.ok) {
-        alert('Login successful!');
-        console.log(data); 
-        closeModal(); 
+        
+        Swal.fire({
+          title: 'Mabuhay!',
+          text: 'Welcome to your Mabuhay Airline account.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          
+          closeModal();
+
+          
+          navigate('/user-dashboard');
+        });
       } else {
-        alert(data.message || 'Login failed');
+        
+        Swal.fire({
+          title: 'Login Failed',
+          text: 'Incorrect username or password, please try again!',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       }
     } catch (err) {
       console.error(err);
-      alert('Something went wrong');
+      Swal.fire({
+        title: 'Error',
+        text: 'Something went wrong. Please try again later.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
     }
   };
 
@@ -64,7 +89,7 @@ const Login = ({ closeModal, openSignUpModal }) => {
           />
           <button
             type="button"
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-white"
             onClick={() => setShowPassword(!showPassword)}
           >
             <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>

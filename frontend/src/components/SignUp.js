@@ -41,14 +41,17 @@ const SignUpForm = () => {
     <form onSubmit={handleSubmit}>
       <div className="row g-2 mb-2">
         <div className="col">
+        <label htmlFor="firstName" className="form-label">First Name:</label>
           <input name="firstName" placeholder="First Name" className="form-control" onChange={handleChange} required />
         </div>
         <div className="col">
+        <label htmlFor="lastName" className="form-label">Last Name:</label>
           <input name="lastName" placeholder="Last Name" className="form-control" onChange={handleChange} required />
         </div>
       </div>
       <div className="row g-2 mb-2">
         <div className="col">
+        <label htmlFor="prefix" className="form-label">Prefix:</label>
           <select name="prefix" className="form-select" onChange={handleChange} required>
       <option value="">Select Prefix</option>
       <option value="Mr">Mr</option>
@@ -58,6 +61,7 @@ const SignUpForm = () => {
     </select>
         </div>
         <div className="col">
+        <label htmlFor="gender" className="form-label">Gender:</label>
           <select name="gender" className="form-select" onChange={handleChange} required>
       <option value="">Select Gender</option>
       <option value="Male">Male</option>
@@ -68,21 +72,27 @@ const SignUpForm = () => {
         </div>
       </div>
       <div className="mb-2">
+      <label htmlFor="mobileNumber" className="form-label">Mobile Number:</label>
         <input name="mobileNumber" placeholder="Mobile Number" className="form-control" onChange={handleChange} required />
       </div>
       <div className="mb-2">
+      <label htmlFor="dateOfBirth" className="form-label">Date of Birth:</label>
         <input name="dateOfBirth" type="date" className="form-control" onChange={handleChange} required />
       </div>
       <div className="mb-2">
+      <label htmlFor="address" className="form-label">Address:</label>
         <input name="address" placeholder="Address" className="form-control" onChange={handleChange} required />
       </div>
       <div className="mb-2">
+      <label htmlFor="email" className="form-label">Email:</label>
         <input name="email" type="email" placeholder="Email" className="form-control" onChange={handleChange} required />
       </div>
       <div className="mb-2">
+      <label htmlFor="password" className="form-label">Password:</label>
         <input name="password" type="password" placeholder="Password" className="form-control" onChange={handleChange} required />
       </div>
       <div className="mb-3">
+      <label htmlFor="confirmPassword" className="form-label">Confirm Password:</label>
         <input name="confirmPassword" type="password" placeholder="Confirm Password" className="form-control" onChange={handleChange} required />
       </div>
       <button type="submit" className="btn btn-success w-100">Sign Up</button>
