@@ -48,7 +48,7 @@ const SearchResults = () => {
 
   return (
     <div className="container my-5">
-      <h2 className="mb-4">Search Results</h2>
+      <h2 className="mb-4">Available Flight Results</h2>
       {loading ? (
         <div className="text-center">
           <div className="spinner-border text-primary" role="status" />
