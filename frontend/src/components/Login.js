@@ -17,49 +17,67 @@ const Login = ({ closeModal, openSignUpModal }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+const handleSubmit = async e => {
+  e.preventDefault();
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
 
-      const data = await res.json();
-      if (res.ok) {
-        
+    const data = await res.json();
+      console.log(data);  // Add this line to inspect the response
+
+    if (res.ok) {
+      // Check if user exists in the response
+      if (data.user && data.user.role) {
+        // Store token and user
+        localStorage.setItem("token", data.access);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
         Swal.fire({
           title: 'Mabuhay!',
           text: 'Welcome to your Mabuhay Airline account.',
           icon: 'success',
           confirmButtonText: 'OK',
         }).then(() => {
-          
-          closeModal();
+          closeModal?.();
 
-          
-          navigate('/user-dashboard');
+          // Redirect based on role
+          if (data.user.role === 'admin') {
+            navigate('/admin');
+          } else {
+            navigate('/user-dashboard');
+          }
         });
       } else {
-        
+        // If user or role is missing, show an error
         Swal.fire({
           title: 'Login Failed',
-          text: 'Incorrect username or password, please try again!',
+          text: 'User information is missing or invalid.',
           icon: 'error',
           confirmButtonText: 'OK',
         });
       }
-    } catch (err) {
-      console.error(err);
+    } else {
       Swal.fire({
-        title: 'Error',
-        text: 'Something went wrong. Please try again later.',
+        title: 'Login Failed',
+        text: data.message || 'Incorrect username or password, please try again!',
         icon: 'error',
         confirmButtonText: 'OK',
       });
     }
-  };
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      title: 'Error',
+      text: 'Something went wrong. Please try again later.',
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
+  }
+};
 
   return (
     <form onSubmit={handleSubmit}>
