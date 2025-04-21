@@ -1,0 +1,36 @@
+stages:
+  - build
+
+.build:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: ['']
+  stage: build
+  script:
+    # see https://github.com/GoogleContainerTools/kaniko/issues/1227
+    - /kaniko/executor --cache=true --context $CI_PROJECT_DIR/$(dirname $DOCKERFILE_PATH)
+      --dockerfile $CI_PROJECT_DIR/$DOCKERFILE_PATH
+      --destination $REGISTRY:$CI_COMMIT_SHORT_SHA
+      --destination $REGISTRY:latest
+
+backend-build:
+  extends: .build
+  environment:
+    name: production
+  variables:
+    DOCKERFILE_PATH: backend/Dockerfile
+    REGISTRY: ${CONTAINER_REGISTRY}/z-prj-group/airline-booking-sys/backend
+  only:
+    refs:
+      - master
+
+frontend-build:
+  extends: .build
+  environment:
+    name: production
+  variables:
+    DOCKERFILE_PATH: frontend/Dockerfile
+    REGISTRY: ${CONTAINER_REGISTRY}/z-prj-group/airline-booking-sys/frontend
+  only:
+    refs:
+      - master

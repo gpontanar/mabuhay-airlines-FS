@@ -24,7 +24,7 @@ COPY --from=builder --chown=nodejs:nodejs /app/controllers ./controllers
 COPY --from=builder --chown=nodejs:nodejs /app/models ./models
 COPY --from=builder --chown=nodejs:nodejs /app/routes ./routes
 COPY --from=builder --chown=nodejs:nodejs /app/*.js ./
-COPY --from=builder --chown=nodejs:nodejs /app/.env ./
+#COPY --from=builder --chown=nodejs:nodejs /app/.env ./
 USER nodejs
 EXPOSE 4000
 CMD ["node", "index.js"]
