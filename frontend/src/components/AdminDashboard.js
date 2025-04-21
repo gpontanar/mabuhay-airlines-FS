@@ -11,7 +11,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchFlights = async () => {
       const response = await getAllFlights();
-      setFlights(response.data); 
+      setFlights(response); 
     };
     fetchFlights();
   }, []);
@@ -31,13 +31,12 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="container">
+     <div className="container">
       <h2>Admin Dashboard</h2>
-      <FlightTable
-        flights={flights}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+      <button className="btn btn-primary" onClick={() => navigate("/admin/create-flight")}>
+        + Create Flight
+      </button>
+      <FlightTable flights={flights} onEdit={handleEdit} onDelete={handleDelete} />
     </div>
   );
 };

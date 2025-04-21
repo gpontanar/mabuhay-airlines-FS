@@ -1,6 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 import Swal from 'sweetalert2';
 import 'notyf/notyf.min.css';
 import '../index.css';
@@ -10,6 +11,8 @@ const Login = ({ closeModal, openSignUpModal }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  const { setUser } = useContext(UserContext); 
 
 
   const handleChange = e => {
@@ -36,6 +39,9 @@ const handleSubmit = async e => {
         localStorage.setItem("token", data.access);
         localStorage.setItem("user", JSON.stringify(data.user));
 
+
+        setUser(data.user); 
+
         Swal.fire({
           title: 'Mabuhay!',
           text: 'Welcome to your Mabuhay Airline account.',
@@ -43,16 +49,15 @@ const handleSubmit = async e => {
           confirmButtonText: 'Go to Dashboard',
         }).then(() => {
           closeModal?.();
-
-          // Redirect based on role
           if (data.user.role === 'admin') {
-            navigate('/admin');
-          } else {
-            navigate('/user-dashboard');
-          }
-        });
+              navigate('/admin');
+            } else {
+              navigate('/user-dashboard');
+            }
+          });
       } else {
-        // If user or role is missing, show an error
+
+          
         Swal.fire({
           title: 'Login Failed',
           text: 'User information is missing or invalid.',
