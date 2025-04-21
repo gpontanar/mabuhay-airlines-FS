@@ -3,20 +3,48 @@ const Flight = require('../models/Flight');
 
 
 
-// Get all flights
+
+// Get all flights with optional search filters
 exports.getAllFlights = async (req, res) => {
   try {
-    const flights = await Flight.find();
+    const { from, to, departure, arrival } = req.query;
+
+    
+    let filter = {};
+
+    if (from) {
+      filter.departure = { $gte: new Date(from) };
+    }
+    if (to) {
+      filter.arrival = { $lte: new Date(to) }; 
+    }
+    if (departure) {
+      filter.departure = { $gte: new Date(departure) };
+    }
+    if (arrival) {
+      filter.arrival = { $lte: new Date(arrival) }; 
+    }
+
+   
+    let flights = await Flight.find(filter).populate('airline', 'name');
+
+   
+    if (flights.length === 0) {
+      console.log("No flights found with the given filters. Returning all flights.");
+      flights = await Flight.find().populate('airline', 'name'); 
+    }
+
     res.status(200).json(flights);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
+
 // Get flight by ID
 exports.getFlightById = async (req, res) => {
   try {
-    const flight = await Flight.findById(req.params.id);
+    const flight = await Flight.findById(req.params.id).populate('airline', 'name');  // Populate airline name
     if (!flight) {
       return res.status(404).json({ error: "Flight not found" });
     }
