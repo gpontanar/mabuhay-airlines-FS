@@ -8,7 +8,7 @@ stages:
   stage: build
   script:
     # see https://github.com/GoogleContainerTools/kaniko/issues/1227
-    - /kaniko/executor --cache=true --context $CI_PROJECT_DIR
+    - /kaniko/executor --cache=true --context $CI_PROJECT_DIR/$(dirname $DOCKERFILE_PATH)
       --dockerfile $CI_PROJECT_DIR/$DOCKERFILE_PATH
       --destination $REGISTRY:$CI_COMMIT_SHORT_SHA
       --destination $REGISTRY:latest
