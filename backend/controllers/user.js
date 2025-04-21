@@ -45,26 +45,71 @@ const { errorHandler } = auth;
               .then((result) => res.status(201).send({ message: "Registered Successfully", user: result }))
               .catch((error) => errorHandler(error, req, res));
           };
-
-          module.exports.login = (req, res) => {
+   
+        // module.exports.login = (req, res) => {
+        //     if (!req.body.email.includes("@")) {
+        //       return res.status(400).send({ error: "Invalid email format" });
+        //     }
+          
+        //     return User.findOne({ email: req.body.email })
+        //       .then((result) => {
+        //         if (result == null) {
+        //           return res.status(404).send({ error: "No Email Found" });
+        //         } else {
+        //           const isPasswordCorrect = bcrypt.compareSync(req.body.password, result.password);
+        //           if (isPasswordCorrect) {
+        //             const accessToken = auth.createAccessToken(result);
+        //             return res.send({
+        //               access: accessToken,
+        //               user: {
+        //                 id: result._id,
+        //                 email: result.email,
+        //                 role: result.isAdmin ? "admin" : "user",
+        //                 firstName: result.firstName,
+        //                 lastName: result.lastName,
+        //               },
+        //             });
+        //           } else {
+        //             return res.status(401).send({ error: "Email and password do not match" });
+        //           }
+        //         }
+        //       })
+        //       .catch((error) => errorHandler(error, req, res));
+        //   };
+        module.exports.login = (req, res) => {
             if (!req.body.email.includes("@")) {
-                  return res.status(400).send({ error: "Invalid email format" });
-              }
-
-              return User.findOne({ email: req.body.email })
-                  .then(result => {
-                      if (result == null) {
-                          return res.status(404).send({ error: "No Email Found" });
-                      } else {
-                          const isPasswordCorrect = bcrypt.compareSync(req.body.password, result.password);
-                          if (isPasswordCorrect) {
-                              return res.send({ access: auth.createAccessToken(result) });
-                          } else {
-                              return res.status(401).send({ error: "Email and password do not match" });
-                          }
-                      }
-                  })
-                  .catch(error => errorHandler(error, req, res));
+              return res.status(400).send({ error: "Invalid email format" });
+            }
+          
+            return User.findOne({ email: req.body.email })
+              .then((result) => {
+                if (result == null) {
+                  return res.status(404).send({ error: "No Email Found" });
+                } else {
+                  const isPasswordCorrect = bcrypt.compareSync(req.body.password, result.password);
+                  if (isPasswordCorrect) {
+                    const accessToken = auth.createAccessToken(result);
+                    return res.send({
+                      access: accessToken,
+                      user: {
+                        id: result._id,
+                        email: result.email,
+                        role: result.isAdmin ? "admin" : "user",
+                        firstName: result.firstName,
+                        lastName: result.lastName,
+                        prefix: result.prefix, // Include prefix
+                        gender: result.gender, // Include gender
+                        mobileNumber: result.mobileNumber, // Include mobile number
+                        dateOfBirth: result.dateOfBirth, // Include date of birth
+                        address: result.address, // Include address
+                      },
+                    });
+                  } else {
+                    return res.status(401).send({ error: "Email and password do not match" });
+                  }
+                }
+              })
+              .catch((error) => errorHandler(error, req, res));
           };
 
 module.exports.getProfile = (req, res) => {

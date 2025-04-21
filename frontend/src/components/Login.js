@@ -40,7 +40,7 @@ const handleSubmit = async e => {
           title: 'Mabuhay!',
           text: 'Welcome to your Mabuhay Airline account.',
           icon: 'success',
-          confirmButtonText: 'OK',
+          confirmButtonText: 'Go to Dashboard',
         }).then(() => {
           closeModal?.();
 

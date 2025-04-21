@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { fetchFlightsData } from '../api'; // API fetch function
+import { fetchFlightsData } from '../api'; 
 import FlightCard from './FlightCard';
 
 const SearchResults = () => {
@@ -24,6 +24,7 @@ const SearchResults = () => {
     const getFlights = async () => {
       setLoading(true);
 
+    
       const allFieldsFilled = departureCity && destinationCity && departureDate && cabinClass;
 
       const data = await fetchFlightsData(
@@ -31,7 +32,7 @@ const SearchResults = () => {
           from: departureCity,
           to: destinationCity,
           date: departureDate,
-          cabinClass,
+          cabinClass, 
         } : {}
       );
 
