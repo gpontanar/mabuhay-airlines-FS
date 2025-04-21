@@ -9,6 +9,8 @@ services:
     restart: unless-stopped
     networks:
       - app-network
+    depends_on:
+      - backend
   backend:
     build:
       context: backend/
