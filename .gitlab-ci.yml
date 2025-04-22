@@ -42,8 +42,8 @@ frontend-build:
   stage: deploy
   image: lwolf/kubectl_deployer:1.18.3
   script:
-    - cat frontend/deployment.yml | envsubst | kubectl --kubeconfig $KUBE_CONFIG apply -f -
-    - kubectl --kubeconfig $KUBE_CONFIG describe deployment web-app
+    - cat frontend/deployment.yml | envsubst | kubectl --kubeconfig "$KUBE_CONFIG" apply -f -
+    - kubectl --kubeconfig "$KUBE_CONFIG" describe deployment web-app
 
 frontend-deploy:
   extends: .deploy
