@@ -50,7 +50,7 @@ frontend-deploy:
   variables:
     DOCKER_IMAGE: ${CONTAINER_REGISTRY}/z-prj-group/airline-booking-sys/frontend:$CI_COMMIT_SHORT_SHA
   after_script:
-    - export REGISTRY_AUTH=$(echo -n "{\"auths\":{\"${CONTAINER_REGISTRY}\":{\"username\":\"$GITLAB_REGISTRY_USER\",\"password\":\"$GITLAB_REGISTRY_PASSWORD\",\"auth\":\"$(echo -n "$GITLAB_REGISTRY_USER:$GITLAB_REGISTRY_PASSWORD" | base64)\"}}}" | base64 -w 0)
+    - export REGISTRY_AUTH=$(echo -n "{\"auths\":{\"${CONTAINER_REGISTRY}\":{\"username\":\"$GITLAB_REGISTRY_USER\",\"password\":\"$GITLAB_REGISTRY_PASSWORD\",\"auth\":\"$(echo -n "$GITLAB_REGISTRY_USER:$GITLAB_REGISTRY_PASSWORD" | base64)\"}}}" | base64 | tr -d '\n')
     - cat frontend/secret.yml | envsubst | kubectl --kubeconfig $KUBE_CONFIG apply -f -
   only:
     refs:
