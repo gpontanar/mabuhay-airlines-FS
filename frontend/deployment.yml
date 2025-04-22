@@ -43,7 +43,7 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: 3000
+      targetPort: 80
   selector:
     app: web-app
     tier: frontend
@@ -55,7 +55,7 @@ kind: Ingress
 metadata:
   name: web-app
   annotations:
-    kubernetes.io/ingress.class: public
+    ingressClassName: traefik
 spec:
   rules:
     - host: $PROJECT_DOMAIN
