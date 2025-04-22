@@ -7,7 +7,7 @@ const { verify, isLoggedIn, verifyAdmin } = require("../auth");
 router.get('/all', flightController.getAllFlights);
 
 // Route to get a flight by ID
-router.get('/:id', flightController.getFlightById);
+router.get('/:id', verify, verifyAdmin, flightController.getFlightById);
 
 // Route to create a new flight
 router.post('/add', verify, verifyAdmin, flightController.createFlight);

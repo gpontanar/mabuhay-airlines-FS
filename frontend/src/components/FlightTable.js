@@ -30,7 +30,7 @@ const FlightTable = ({ flights, onEdit, onDelete }) => {
               <td>{flight.arrival ? new Date(flight.arrival).toLocaleString() : "N/A"}</td>
               <td>{flight.availableSeats || "N/A"}</td>
               <td>{flight.cabinClasses?.join(", ") || "N/A"}</td>
-              <td>${flight.price || "N/A"}</td>
+              <td>₱{flight.price || "N/A"}</td>
               <td>
                 <button className="btn btn-warning" onClick={() => onEdit(flight)}>
                   Edit

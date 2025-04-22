@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllFlights, deleteFlight } from "../api"; // Assuming you have API functions
+import { getAllFlights, deleteFlight } from "../api";
 import FlightTable from "./FlightTable";
 
 const AdminDashboard = () => {

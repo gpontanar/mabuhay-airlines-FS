@@ -38,7 +38,7 @@ export const getAllFlights = async () => {
     }
 
     // Fetch data from the API
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/all`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

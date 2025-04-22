@@ -15,15 +15,24 @@ const EditFlight = () => {
     cabinClasses: '',
     price: '',
   });
-  const { flightId } = useParams(); // Get the flightId from URL
+  const { id: flightId } = useParams();// Get the flightId from URL
   const navigate = useNavigate();
 
   // Fetch the flight data when the component mounts
   useEffect(() => {
     const fetchFlightData = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/${flightId}`);
+        if (!flightId) {
+          throw new Error("Flight ID is undefined");
+        }
+  
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/${flightId}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the token
+          },
+        });
         const data = await res.json();
+  
         if (res.ok) {
           setFormData({
             airline: data.airline,
@@ -32,7 +41,7 @@ const EditFlight = () => {
             from: data.from,
             to: data.to,
             availableSeats: data.availableSeats,
-            cabinClasses: data.cabinClasses.join(', '),  // Assuming it's an array
+            cabinClasses: data.cabinClasses.join(', '),
             price: data.price,
           });
         } else {
@@ -53,7 +62,7 @@ const EditFlight = () => {
         });
       }
     };
-
+  
     fetchFlightData();
   }, [flightId]);
 
