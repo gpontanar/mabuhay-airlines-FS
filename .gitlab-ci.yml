@@ -1,5 +1,6 @@
 stages:
   - build
+  - deploy
 
 .build:
   image:
@@ -21,8 +22,7 @@ backend-build:
     DOCKERFILE_PATH: backend/Dockerfile
     REGISTRY: ${CONTAINER_REGISTRY}/z-prj-group/airline-booking-sys/backend
   only:
-    refs:
-      - master
+    - tags
 
 frontend-build:
   extends: .build
@@ -32,5 +32,21 @@ frontend-build:
     DOCKERFILE_PATH: frontend/Dockerfile
     REGISTRY: ${CONTAINER_REGISTRY}/z-prj-group/airline-booking-sys/frontend
   only:
-    refs:
-      - master
+    - tags
+
+.deploy:
+  stage: deploy
+  image: lwolf/kubectl_deployer:1.18.3
+  script:
+    - cat deployment.yaml | envsubst | kubectl
+      --kubeconfig $KUBE_CONFIG apply -f -
+    - kubectl --kubeconfig $KUBE_CONFIG describe deployment web-app
+
+frontend-deploy:
+  extends: .deploy
+  environment:
+    name: production
+  variables:
+    DOCKER_IMAGE: ${CONTAINER_REGISTRY}/z-prj-group/airline-booking-sys/frontend:$CI_COMMIT_SHORT_SHA
+  only:
+    - tags
