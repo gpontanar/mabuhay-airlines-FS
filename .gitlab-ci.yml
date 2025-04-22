@@ -22,7 +22,9 @@ backend-build:
     DOCKERFILE_PATH: backend/Dockerfile
     REGISTRY: ${CONTAINER_REGISTRY}/z-prj-group/airline-booking-sys/backend
   only:
-    - tags
+    refs:
+      - master
+
 
 frontend-build:
   extends: .build
@@ -32,7 +34,9 @@ frontend-build:
     DOCKERFILE_PATH: frontend/Dockerfile
     REGISTRY: ${CONTAINER_REGISTRY}/z-prj-group/airline-booking-sys/frontend
   only:
-    - tags
+    refs:
+      - master
+
 
 .deploy:
   stage: deploy
@@ -49,4 +53,5 @@ frontend-deploy:
   variables:
     DOCKER_IMAGE: ${CONTAINER_REGISTRY}/z-prj-group/airline-booking-sys/frontend:$CI_COMMIT_SHORT_SHA
   only:
-    - tags
+    refs:
+      - master
