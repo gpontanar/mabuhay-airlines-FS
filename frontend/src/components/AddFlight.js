@@ -1,5 +1,5 @@
 // src/components/AddFlight.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,23 +15,45 @@ const AddFlight = () => {
     cabinClasses: '',
     price: '',
   });
+  const [airlines, setAirlines] = useState([]); // State to store the list of airlines
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAirlines = async () => {
+      try {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/airlines`);
+        const data = await res.json();
+        if (res.ok) {
+          setAirlines(data); // Set the list of airlines
+        } else {
+          console.error('Failed to fetch airlines:', data.error);
+        }
+      } catch (err) {
+        console.error('Error fetching airlines:', err);
+      }
+    };
+
+    fetchAirlines();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          cabinClasses: formData.cabinClasses.split(',').map((className) => className.trim()), // Convert cabin classes to an array
+        }),
       });
 
       const data = await res.json();
@@ -42,7 +64,7 @@ const AddFlight = () => {
           icon: 'success',
           confirmButtonText: 'OK',
         }).then(() => {
-          navigate('/admin');  // Navigate to the admin dashboard after success
+          navigate('/admin'); // Navigate to the admin dashboard after success
         });
       } else {
         Swal.fire({
@@ -69,15 +91,21 @@ const AddFlight = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="airline" className="form-label">Airline</label>
-          <input
-            type="text"
+          <select
             id="airline"
             name="airline"
-            className="form-control"
+            className="form-select"
             value={formData.airline}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="">Select Airline</option>
+            {airlines.map((airline) => (
+              <option key={airline._id} value={airline._id}>
+                {airline.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="mb-3">
           <label htmlFor="departure" className="form-label">Departure Date</label>

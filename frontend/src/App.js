@@ -53,7 +53,7 @@ function App() {
             }
           />
           <Route
-            path="/admin/add-flight"
+            path="/admin/create-flight"
             element={
               <AdminRoute>
                 <AddFlight />
