@@ -28,4 +28,5 @@ spec:
             requests:
               cpu: 50m
               memory: '64M'
-
+      imagePullSecrets:
+        - name: gitlab-registry
