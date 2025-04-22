@@ -18,6 +18,18 @@ const AddFlight = () => {
   const [airlines, setAirlines] = useState([]); // State to store the list of airlines
   const navigate = useNavigate();
 
+  const airportOptions = [
+    'Manila NAIA',
+    'CEBU Airport',
+    'DAVAO Airport',
+    'ILOILO Airport',
+    'BAGUIO Airport',
+    'PALAWAN Airport',
+    'BOHOL Airport',
+    'CATICLAN Airport',
+    'SIARGAO Airport',
+  ];
+
   useEffect(() => {
     const fetchAirlines = async () => {
       try {
@@ -133,27 +145,39 @@ const AddFlight = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="from" className="form-label">From</label>
-          <input
-            type="text"
+          <select
             id="from"
             name="from"
-            className="form-control"
+            className="form-select"
             value={formData.from}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="">Select Departure Airport</option>
+            {airportOptions.map((airport, index) => (
+              <option key={index} value={airport}>
+                {airport}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="mb-3">
           <label htmlFor="to" className="form-label">To</label>
-          <input
-            type="text"
+          <select
             id="to"
             name="to"
-            className="form-control"
+            className="form-select"
             value={formData.to}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="">Select Destination Airport</option>
+            {airportOptions.map((airport, index) => (
+              <option key={index} value={airport}>
+                {airport}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="mb-3">
           <label htmlFor="availableSeats" className="form-label">Available Seats</label>
