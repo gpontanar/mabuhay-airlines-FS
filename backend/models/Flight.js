@@ -8,7 +8,8 @@ const flightSchema = new mongoose.Schema({
   to: { type: String, required: true },
   availableSeats: { type: Number, required: true },
   cabinClasses: { type: [String], required: true },
-  price: { type: Number, required: true }
+  price: { type: Number, required: true },
+  isArchived: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('Flight', flightSchema);

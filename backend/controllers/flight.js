@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'); 
 const Flight = require('../models/Flight');
+const Airline = require('../models/Airline');
 
 
 
@@ -44,7 +45,7 @@ exports.getAllFlights = async (req, res) => {
 // Get flight by ID
 exports.getFlightById = async (req, res) => {
   try {
-    const flight = await Flight.findById(req.params.id).populate('airline', 'name');  // Populate airline name
+    const flight = await Flight.findById(req.params.id).populate('airline', 'name'); // Populate airline name
     if (!flight) {
       return res.status(404).json({ error: "Flight not found" });
     }
@@ -55,14 +56,47 @@ exports.getFlightById = async (req, res) => {
 };
 
 // Update flight details
+// exports.updateFlight = async (req, res) => {
+//   try {
+//     const flight = await Flight.findByIdAndUpdate(req.params.id, req.body, { new: true });
+//     if (!flight) {
+//       return res.status(404).json({ error: "Flight not found" });
+//     }
+//     res.status(200).json(flight);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// };
 exports.updateFlight = async (req, res) => {
   try {
-    const flight = await Flight.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { airline, ...updateData } = req.body;
+
+    let airlineId = airline;
+
+    // If the airline is a string (name), resolve it to an ObjectId or create a new airline
+    if (!mongoose.Types.ObjectId.isValid(airline)) {
+      let airlineDoc = await Airline.findOne({ name: airline });
+      if (!airlineDoc) {
+        // Create a new airline if it doesn't exist
+        airlineDoc = new Airline({ name: airline });
+        await airlineDoc.save();
+      }
+      airlineId = airlineDoc._id;
+    }
+
+    const flight = await Flight.findByIdAndUpdate(
+      req.params.id,
+      { ...updateData, airline: airlineId },
+      { new: true }
+    );
+
     if (!flight) {
       return res.status(404).json({ error: "Flight not found" });
     }
+
     res.status(200).json(flight);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -76,6 +110,27 @@ exports.deleteFlight = async (req, res) => {
     }
     res.status(200).json({ message: "Flight deleted successfully" });
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Archive a flight
+exports.toggleArchiveFlight = async (req, res) => {
+  try {
+    const flight = await Flight.findById(req.params.id);
+    if (!flight) {
+      return res.status(404).json({ error: "Flight not found" });
+    }
+
+    flight.isArchived = !flight.isArchived; // Toggle the archived status
+    await flight.save();
+
+    res.status(200).json({
+      message: `Flight has been ${flight.isArchived ? 'archived' : 'activated'}.`,
+      flight,
+    });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 };

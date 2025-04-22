@@ -1,42 +1,60 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllFlights, deleteFlight } from "../api";
+import { getAllFlights, deleteFlight, toggleArchiveFlight } from "../api";
 import FlightTable from "./FlightTable";
 
 const AdminDashboard = () => {
   const [flights, setFlights] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch flights when the component mounts
   useEffect(() => {
     const fetchFlights = async () => {
       const response = await getAllFlights();
-      setFlights(response); 
+      setFlights(response);
     };
     fetchFlights();
   }, []);
 
-  // Handle the edit button click
- const handleEdit = (flight) => {
-  navigate(`/admin/edit-flight/${flight._id}`); 
-};
-  // Handle the delete button click
   const handleDelete = async (flightId) => {
-    const response = await deleteFlight(flightId); // Call API to delete the flight
-    if (response.success) {
-      setFlights(flights.filter((flight) => flight._id !== flightId)); // Remove flight from state
-    } else {
-      alert("Error deleting flight");
+    try {
+      const response = await deleteFlight(flightId);
+      if (response) {
+        setFlights((prevFlights) =>
+          prevFlights.filter((flight) => flight._id !== flightId)
+        );
+      }
+    } catch (err) {
+      console.error("Error deleting flight:", err);
+    }
+  };
+
+  const handleToggleArchive = async (flightId) => {
+    try {
+      const response = await toggleArchiveFlight(flightId);
+      if (response) {
+        setFlights((prevFlights) =>
+          prevFlights.map((flight) =>
+            flight._id === flightId ? { ...flight, isArchived: !flight.isArchived } : flight
+          )
+        );
+      }
+    } catch (err) {
+      console.error("Error toggling archive status:", err);
     }
   };
 
   return (
-     <div className="container">
+    <div className="container">
       <h2>Admin Dashboard</h2>
       <button className="btn btn-primary" onClick={() => navigate("/admin/create-flight")}>
         + Create Flight
       </button>
-      <FlightTable flights={flights} onEdit={handleEdit} onDelete={handleDelete} />
+      <FlightTable
+        flights={flights}
+        onEdit={(flight) => navigate(`/admin/edit-flight/${flight._id}`)}
+        onDelete={handleDelete}
+        onToggleArchive={handleToggleArchive}
+      />
     </div>
   );
 };

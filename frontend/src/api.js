@@ -108,13 +108,28 @@ export const deleteFlight = async (id) => {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/${id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${getToken()}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     if (!res.ok) throw new Error("Failed to delete flight");
     return await res.json();
   } catch (err) {
     console.error("Admin API error (deleteFlight):", err);
+    return null;
+  }
+};
+export const toggleArchiveFlight = async (id) => {
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/${id}/toggle-archive`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    if (!res.ok) throw new Error("Failed to toggle archive status");
+    return await res.json();
+  } catch (err) {
+    console.error("Admin API error (toggleArchiveFlight):", err);
     return null;
   }
 };

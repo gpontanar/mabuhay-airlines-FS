@@ -18,4 +18,6 @@ router.put('/:id', verify, verifyAdmin, flightController.updateFlight);
 // Route to delete a flight by ID
 router.delete('/:id', verify, verifyAdmin, flightController.deleteFlight);
 
+router.patch('/:id/toggle-archive', verify, verifyAdmin, flightController.toggleArchiveFlight);
+
 module.exports = router;

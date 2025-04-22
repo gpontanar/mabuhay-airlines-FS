@@ -1,7 +1,6 @@
 import React from "react";
 
-const FlightTable = ({ flights, onEdit, onDelete }) => {
-  // Ensure flights is an array
+const FlightTable = ({ flights, onEdit, onDelete, onToggleArchive }) => {
   const safeFlights = Array.isArray(flights) ? flights : [];
 
   return (
@@ -16,6 +15,7 @@ const FlightTable = ({ flights, onEdit, onDelete }) => {
           <th>Seats</th>
           <th>Cabins</th>
           <th>Price</th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -31,22 +31,26 @@ const FlightTable = ({ flights, onEdit, onDelete }) => {
               <td>{flight.availableSeats || "N/A"}</td>
               <td>{flight.cabinClasses?.join(", ") || "N/A"}</td>
               <td>₱{flight.price || "N/A"}</td>
+              <td>{flight.isArchived ? "Archived" : "Active"}</td>
               <td>
                 <button className="btn btn-warning" onClick={() => onEdit(flight)}>
                   Edit
                 </button>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => onDelete(flight._id)}
-                >
+                <button className="btn btn-danger" onClick={() => onDelete(flight._id)}>
                   Delete
+                </button>
+                <button
+                  className={`btn ${flight.isArchived ? 'btn-success' : 'btn-secondary'}`}
+                  onClick={() => onToggleArchive(flight._id)}
+                >
+                  {flight.isArchived ? "Activate" : "Archive"}
                 </button>
               </td>
             </tr>
           ))
         ) : (
           <tr>
-            <td colSpan="9">No flights available.</td>
+            <td colSpan="10">No flights available.</td>
           </tr>
         )}
       </tbody>

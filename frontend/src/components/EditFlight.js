@@ -15,33 +15,29 @@ const EditFlight = () => {
     cabinClasses: '',
     price: '',
   });
-  const { id: flightId } = useParams();// Get the flightId from URL
+  const { id: flightId } = useParams(); // Get the flight ID from the URL
   const navigate = useNavigate();
 
   // Fetch the flight data when the component mounts
   useEffect(() => {
     const fetchFlightData = async () => {
       try {
-        if (!flightId) {
-          throw new Error("Flight ID is undefined");
-        }
-  
         const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/${flightId}`, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the token
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
         const data = await res.json();
-  
+    
         if (res.ok) {
           setFormData({
-            airline: data.airline,
-            departure: data.departure,
-            arrival: data.arrival,
+            airline: data.airline?.name || '',
+            departure: data.departure ? new Date(data.departure).toISOString().slice(0, 16) : '',
+            arrival: data.arrival ? new Date(data.arrival).toISOString().slice(0, 16) : '',
             from: data.from,
             to: data.to,
             availableSeats: data.availableSeats,
-            cabinClasses: data.cabinClasses.join(', '),
+            cabinClass: data.cabinClasses[0] || '', // Use the first cabin class as the default value
             price: data.price,
           });
         } else {
@@ -62,7 +58,7 @@ const EditFlight = () => {
         });
       }
     };
-  
+
     fetchFlightData();
   }, [flightId]);
 
@@ -78,14 +74,15 @@ const EditFlight = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({
           ...formData,
-          cabinClasses: formData.cabinClasses.split(',').map((className) => className.trim()),
+          cabinClasses: [formData.cabinClass], // Convert cabinClass to an array
+          airline: formData.airline,
         }),
       });
-
+  
       const data = await res.json();
       if (res.ok) {
         Swal.fire({
@@ -114,7 +111,6 @@ const EditFlight = () => {
       });
     }
   };
-
   return (
     <div className="container">
       <h2 className="my-4">Edit Flight</h2>
@@ -132,7 +128,7 @@ const EditFlight = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="departure" className="form-label">Departure Date</label>
+          <label htmlFor="departure" className="form-label">Departure Date and Time</label>
           <input
             type="datetime-local"
             id="departure"
@@ -144,7 +140,7 @@ const EditFlight = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="arrival" className="form-label">Arrival Date</label>
+          <label htmlFor="arrival" className="form-label">Arrival Date and Time</label>
           <input
             type="datetime-local"
             id="arrival"
@@ -192,16 +188,21 @@ const EditFlight = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="cabinClasses" className="form-label">Cabin Classes (Comma separated)</label>
-          <input
-            type="text"
-            id="cabinClasses"
-            name="cabinClasses"
-            className="form-control"
-            value={formData.cabinClasses}
+          <label htmlFor="cabinClass" className="form-label">Cabin Class</label>
+          <select
+            id="cabinClass"
+            name="cabinClass"
+            className="form-select"
+            value={formData.cabinClass}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="">Select Cabin Class</option>
+            <option value="Economy">Economy</option>
+            <option value="Premium Economy">Premium Economy</option>
+            <option value="Business">Business</option>
+            <option value="First Class">First Class</option>
+          </select>
         </div>
         <div className="mb-3">
           <label htmlFor="price" className="form-label">Price</label>
