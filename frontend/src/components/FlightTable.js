@@ -1,6 +1,6 @@
 import React from "react";
 
-const FlightTable = ({ flights, onEdit, onDelete, onToggleArchive }) => {
+const FlightTable = ({ flights, onEdit, onToggleArchive, onDelete }) => {
   const safeFlights = Array.isArray(flights) ? flights : [];
 
   return (
@@ -31,19 +31,22 @@ const FlightTable = ({ flights, onEdit, onDelete, onToggleArchive }) => {
               <td>{flight.availableSeats || "N/A"}</td>
               <td>{flight.cabinClasses?.join(", ") || "N/A"}</td>
               <td>₱{flight.price || "N/A"}</td>
-              <td>{flight.isArchived ? "Archived" : "Active"}</td>
+              <td>{flight.isActive ? "Active" : "Archived"}</td>
               <td>
                 <button className="btn btn-warning" onClick={() => onEdit(flight)}>
                   Edit
                 </button>
-                <button className="btn btn-danger" onClick={() => onDelete(flight._id)}>
-                  Delete
-                </button>
                 <button
-                  className={`btn ${flight.isArchived ? 'btn-success' : 'btn-secondary'}`}
+                  className={`btn ${flight.isActive ? "btn-secondary" : "btn-success"}`}
                   onClick={() => onToggleArchive(flight._id)}
                 >
-                  {flight.isArchived ? "Activate" : "Archive"}
+                  {flight.isActive ? "Archive" : "Activate"}
+                </button>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => onDelete(flight._id)}
+                >
+                  Delete
                 </button>
               </td>
             </tr>

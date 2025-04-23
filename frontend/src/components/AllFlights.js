@@ -10,8 +10,10 @@ const AllFlights = () => {
     const fetchFlights = async () => {
       setLoading(true);
       try {
-        const data = await getAllFlights(); 
-        setFlights(data);
+        const data = await getAllFlights();
+        // Filter out flights where isActive is false
+        const activeFlights = data.filter((flight) => flight.isActive);
+        setFlights(activeFlights);
       } catch (error) {
         console.error("Error fetching flights:", error);
       } finally {
@@ -24,7 +26,7 @@ const AllFlights = () => {
 
   const handleBookClick = (flightId) => {
     console.log(`Redirecting to booking page for flight ID: ${flightId}`);
-   
+    // Add navigation logic here
   };
 
   if (loading) {

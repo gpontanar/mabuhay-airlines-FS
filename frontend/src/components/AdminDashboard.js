@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllFlights, deleteFlight, toggleArchiveFlight } from "../api";
+import { getAllFlights, toggleArchiveFlight } from "../api";
 import FlightTable from "./FlightTable";
 
 const AdminDashboard = () => {
@@ -10,23 +10,10 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchFlights = async () => {
       const response = await getAllFlights();
-      setFlights(response);
+      setFlights(response); // Load all flights, including archived ones
     };
     fetchFlights();
   }, []);
-
-  const handleDelete = async (flightId) => {
-    try {
-      const response = await deleteFlight(flightId);
-      if (response) {
-        setFlights((prevFlights) =>
-          prevFlights.filter((flight) => flight._id !== flightId)
-        );
-      }
-    } catch (err) {
-      console.error("Error deleting flight:", err);
-    }
-  };
 
   const handleToggleArchive = async (flightId) => {
     try {
@@ -34,7 +21,7 @@ const AdminDashboard = () => {
       if (response) {
         setFlights((prevFlights) =>
           prevFlights.map((flight) =>
-            flight._id === flightId ? { ...flight, isArchived: !flight.isArchived } : flight
+            flight._id === flightId ? { ...flight, isActive: !flight.isActive } : flight
           )
         );
       }
@@ -52,7 +39,6 @@ const AdminDashboard = () => {
       <FlightTable
         flights={flights}
         onEdit={(flight) => navigate(`/admin/edit-flight/${flight._id}`)}
-        onDelete={handleDelete}
         onToggleArchive={handleToggleArchive}
       />
     </div>

@@ -207,12 +207,29 @@ style={{
     <p>You have no bookings at the moment.</p>
     ) : (
     <ul className="list-group">
-    {bookings.map((booking) => (
+    {/* {bookings.map((booking) => (
       <li key={booking._id} className="list-group-item">
       <h5>Booking ID: {booking._id}</h5>
       <p><strong>Flight:</strong> {booking.flight}</p>
       <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
       <p><strong>Status:</strong> {booking.status}</p>
+      </li>
+      ))} */}
+      {bookings.map((booking) => (
+      <li key={booking._id} className="list-group-item">
+        <h5>Booking ID: {booking._id}</h5>
+        {booking.flight ? (
+          <>
+            <p><strong>Flight:</strong> {booking.flight.airline?.name || 'N/A'}</p>
+            <p><strong>From:</strong> {booking.flight.from}</p>
+            <p><strong>To:</strong> {booking.flight.to}</p>
+            <p><strong>Departure:</strong> {new Date(booking.flight.departure).toLocaleString()}</p>
+            <p><strong>Arrival:</strong> {new Date(booking.flight.arrival).toLocaleString()}</p>
+            <p><strong>Price:</strong> ₱{booking.flight.price}</p>
+          </>
+        ) : (
+          <p>Flight details not available.</p>
+        )}
       </li>
       ))}
       </ul>

@@ -21,22 +21,13 @@ const Login = ({ closeModal, openSignUpModal }) => {
   };
 
 const handleSubmit = async e => {
-  // e.preventDefault();
-  // try {
-  //   const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(formData),
-  //   });
   e.preventDefault();
   try {
-    const apiUrl = 'http://web-api:4000';
-    const res = await fetch(`${apiUrl}/api/users/login`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
-
 
     const data = await res.json();
       console.log(data);  // Add this line to inspect the response

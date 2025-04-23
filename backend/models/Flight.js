@@ -9,7 +9,7 @@ const flightSchema = new mongoose.Schema({
   availableSeats: { type: Number, required: true },
   cabinClasses: { type: [String], required: true },
   price: { type: Number, required: true },
-  isArchived: { type: Boolean, default: false },
+  // isArchived: { type: Boolean, default: false },
   isActive: { type: Boolean, default: true },
 });
 

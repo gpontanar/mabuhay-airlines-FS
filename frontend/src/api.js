@@ -34,35 +34,24 @@ export const fetchFlightsData = async (
 // Get all flights (admin gets all, users get active flights)
 export const getAllFlights = async () => {
   try {
-    const token = getToken();
+    const token = localStorage.getItem("token");
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-    const headers = {};
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights`, {
       headers,
     });
 
     if (!res.ok) {
-      throw new Error(`Failed to get flights. Status: ${res.status}`);
+      throw new Error(`Failed to fetch flights. Status: ${res.status}`);
     }
 
     const data = await res.json();
-
-    if (!Array.isArray(data)) {
-      console.error("Unexpected API response format:", data);
-      return [];
-    }
-    console.log("Flight data received:", data);
     return data;
   } catch (err) {
-    console.error("API error (getAllFlights):", err);
+    console.error("Error fetching flights:", err);
     return [];
   }
 };
-
 
 // Admin: Create flight
 export const createFlight = async (flightData) => {

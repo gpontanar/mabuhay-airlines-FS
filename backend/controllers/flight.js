@@ -6,7 +6,7 @@ const Airline = require('../models/Airline');
 
 exports.getAllFlights = async (req, res) => {
   try {
-    const user = req.user; 
+    const user = req.user;
 
     // If the user is an admin, return all flights
     if (user && user.role === 'admin') {
@@ -17,7 +17,6 @@ exports.getAllFlights = async (req, res) => {
     // For regular users, return only active flights
     const flights = await Flight.find({ isActive: true }).populate('airline', 'name');
     res.status(200).json(flights);
-    
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -141,11 +140,11 @@ exports.toggleArchiveFlight = async (req, res) => {
       return res.status(404).json({ error: "Flight not found" });
     }
 
-    flight.isArchived = !flight.isArchived; // Toggle the archived status
+    flight.isActive = !flight.isActive; // Toggle the isActive status
     await flight.save();
 
     res.status(200).json({
-      message: `Flight has been ${flight.isArchived ? 'archived' : 'activated'}.`,
+      message: `Flight has been ${flight.isActive ? 'activated' : 'archived'}.`,
       flight,
     });
   } catch (err) {
