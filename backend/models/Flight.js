@@ -10,6 +10,7 @@ const flightSchema = new mongoose.Schema({
   cabinClasses: { type: [String], required: true },
   price: { type: Number, required: true },
   isArchived: { type: Boolean, default: false },
+  isActive: { type: Boolean, default: true },
 });
 
 module.exports = mongoose.model('Flight', flightSchema);

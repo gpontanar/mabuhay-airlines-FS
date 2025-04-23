@@ -120,16 +120,19 @@ module.exports.signUp = (req, res) => {
 // };
 
 module.exports.getProfile = (req, res) => {
-  return User.findById(req.user.id)
-  .then(user => {
-    if (user) {
-      user.password = "";
-      res.send(user);
-    } else {
-      res.status(404).send({ message: "User not found" });
-    }
-  })
-  .catch(error => errorHandler(error, req, res));
+  
+  User.findById(req.user.id)
+    .then(user => {
+      if (user) {
+        user.password = undefined;
+        res.json(user);  
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
+    })
+    .catch(error => {
+      errorHandler(error, req, res);
+    });
 };
 
 module.exports.setUserAsAdmin = (req, res) => {

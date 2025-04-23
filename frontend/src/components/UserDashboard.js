@@ -17,45 +17,75 @@ const UserDashboard = () => {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user'));
-    if (userData) {
-      setUser(userData);
+    const userId = userData?.id;
+
+    console.log("User data from localStorage:", userData);
+
+    if (userId) {
+     console.log("Fetching user with ID:", userData?.id);
+     fetch(`${process.env.REACT_APP_API_URL}/api/users/${userData.id}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+     .then((res) => {
+      if (!res.ok) {
+        throw new Error('User not found');
+      }
+      return res.json();
+    })
+     .then((data) => {
+      console.log("User data fetched:", data);
+      setUser(data);
+    })
+     .catch((err) => {
+      console.error('Error fetching user:', err);
+      Swal.fire({
+        title: 'Error',
+        text: err.message || 'Failed to fetch user data.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    });
+
+
 
       // Show loading modal
-      Swal.fire({
-        title: 'Loading Booking History...',
-        text: 'Please wait while we fetch your booking history.',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-      });
+     Swal.fire({
+      title: 'Loading Booking History...',
+      text: 'Please wait while we fetch your booking history.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
 
       // Fetch user bookings
-      fetch(`${process.env.REACT_APP_API_URL}/api/users/${userData.id}/bookings`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.bookings) {
-            setBookings(data.bookings);
-          } else {
-            setError("No bookings found.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching bookings:", error);
-          setError("An error occurred while fetching bookings.");
-        })
-        .finally(() => {
-          setLoading(false);
+     fetch(`${process.env.REACT_APP_API_URL}/api/bookings/user/${userData.id}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+     .then((res) => res.json())
+     .then((data) => {
+      if (data.bookings) {
+        setBookings(data.bookings);
+      } else {
+        setError("No bookings found.");
+      }
+    })
+     .catch((error) => {
+      console.error("Error fetching bookings:", error);
+      setError("An error occurred while fetching bookings.");
+    })
+     .finally(() => {
+      setLoading(false);
           Swal.close(); // Close the loading modal
         });
-    } else {
-      navigate('/login');
-    }
-  }, [navigate]);
+   } else {
+    navigate('/login');
+  }
+}, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -121,125 +151,125 @@ const UserDashboard = () => {
   }
 
   return (
-    <div className="container mt-5">
-      {/* Welcome Section */}
-      <div className="user-welcome">
-        <div className="user-welcome-overlay">
-          <h1>Welcome to Your Dashboard, {user ? user.firstName : 'User'}!</h1>
-          <p>Here you can manage your bookings and account details.</p>
-        </div>
+  <div className="container mt-5">
+{/* Welcome Section */}
+<div className="user-welcome">
+<div className="user-welcome-overlay">
+<h1>Welcome to Your Dashboard, {user ? user.firstName : 'User'}!</h1>
+<p>Here you can manage your bookings and account details.</p>
+</div>
+</div>
+
+{/* Account Details */}
+<div className="mb-4">
+<h3>Account Details</h3>
+<p><strong>Prefix:</strong> {user?.prefix ?? 'N/A'}</p>
+<p><strong>Full Name:</strong> {user ? `${user.firstName} ${user.lastName}` : 'N/A'}</p>
+<p><strong>Gender:</strong> {user?.gender ?? 'N/A'}</p>
+<p><strong>Mobile Number:</strong> {user?.mobileNumber ?? 'N/A'}</p>
+<p><strong>Date of Birth:</strong> {user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : 'N/A'}</p>
+<p><strong>Address:</strong> {user?.address ?? 'N/A'}</p>
+<p><strong>Email Address:</strong> {user?.email ?? 'N/A'}</p>
+<button
+className="btn"
+style={{
+  backgroundColor: 'navy',
+  color: 'white',
+  transition: 'background-color 0.3s',
+  }}
+  onMouseOver={(e) => (e.target.style.backgroundColor = 'red')}
+  onMouseOut={(e) => (e.target.style.backgroundColor = 'navy')}
+  onClick={() => setShowResetPasswordModal(true)}
+  >
+  Reset Password
+  </button>
+  </div>
+
+{/* Your Bookings Section */}
+<div className="mb-4">
+<div
+className="d-flex justify-content-between align-items-center p-3"
+style={{
+  backgroundColor: 'navy',
+  color: 'white',
+  borderRadius: '5px',
+  cursor: 'pointer',
+  }}
+  onClick={() => setIsBookingsExpanded(!isBookingsExpanded)}
+  >
+  <h3 className="mb-0">Your Bookings</h3>
+  <i className={`fas fa-chevron-${isBookingsExpanded ? 'up' : 'down'}`}></i>
+  </div>
+  <Collapse in={isBookingsExpanded}>
+  <div className="mt-3">
+  {error && <p className="text-danger">{error}</p>}
+  {bookings.length === 0 ? (
+    <p>You have no bookings at the moment.</p>
+    ) : (
+    <ul className="list-group">
+    {bookings.map((booking) => (
+      <li key={booking._id} className="list-group-item">
+      <h5>Booking ID: {booking._id}</h5>
+      <p><strong>Flight:</strong> {booking.flight}</p>
+      <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
+      <p><strong>Status:</strong> {booking.status}</p>
+      </li>
+      ))}
+      </ul>
+      )}
+      </div>
+      </Collapse>
       </div>
 
-      {/* Account Details */}
-      <div className="mb-4">
-        <h3>Account Details</h3>
-        <p><strong>Prefix:</strong> {user?.prefix || 'N/A'}</p>
-        <p><strong>Full Name:</strong> {user ? `${user.firstName} ${user.lastName}` : 'N/A'}</p>
-        <p><strong>Gender:</strong> {user?.gender || 'N/A'}</p>
-        <p><strong>Mobile Number:</strong> {user?.mobileNumber || 'N/A'}</p>
-        <p><strong>Date of Birth:</strong> {user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : 'N/A'}</p>
-        <p><strong>Address:</strong> {user?.address || 'N/A'}</p>
-        <p><strong>Email Address:</strong> {user?.email || 'N/A'}</p>
-        <button
-          className="btn"
-          style={{
-            backgroundColor: 'navy',
-            color: 'white',
-            transition: 'background-color 0.3s',
-          }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = 'red')}
-          onMouseOut={(e) => (e.target.style.backgroundColor = 'navy')}
-          onClick={() => setShowResetPasswordModal(true)}
-        >
-          Reset Password
-        </button>
-      </div>
+    {/* Logout Button */}
+    <button className="btn btn-danger" onClick={handleLogout}>
+    Logout
+    </button>
 
-      {/* Your Bookings Section */}
-      <div className="mb-4">
-        <div
-          className="d-flex justify-content-between align-items-center p-3"
-          style={{
-            backgroundColor: 'navy',
-            color: 'white',
-            borderRadius: '5px',
-            cursor: 'pointer',
-          }}
-          onClick={() => setIsBookingsExpanded(!isBookingsExpanded)}
-        >
-          <h3 className="mb-0">Your Bookings</h3>
-          <i className={`fas fa-chevron-${isBookingsExpanded ? 'up' : 'down'}`}></i>
-        </div>
-        <Collapse in={isBookingsExpanded}>
-          <div className="mt-3">
-            {error && <p className="text-danger">{error}</p>}
-            {bookings.length === 0 ? (
-              <p>You have no bookings at the moment.</p>
-            ) : (
-              <ul className="list-group">
-                {bookings.map((booking) => (
-                  <li key={booking._id} className="list-group-item">
-                    <h5>Booking ID: {booking._id}</h5>
-                    <p><strong>Flight:</strong> {booking.flight}</p>
-                    <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
-                    <p><strong>Status:</strong> {booking.status}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </Collapse>
-      </div>
-
-      {/* Logout Button */}
-      <button className="btn btn-danger" onClick={handleLogout}>
-        Logout
-      </button>
-
-      {/* Reset Password Modal */}
-      <Modal show={showResetPasswordModal} onHide={() => setShowResetPasswordModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Reset Password</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="mb-3">
-            <label htmlFor="newPassword" className="form-label">New Password</label>
-            <input
-              type="password"
-              id="newPassword"
-              className="form-control"
-              value={passwordData.newPassword}
-              onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              className="form-control"
-              value={passwordData.confirmPassword}
-              onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-            />
-          </div>
-          <button
-            className="btn w-100"
-            style={{
-              backgroundColor: 'navy',
-              color: 'white',
-              transition: 'background-color 0.3s',
-            }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = 'red')}
-            onMouseOut={(e) => (e.target.style.backgroundColor = 'navy')}
-            onClick={handleResetPassword}
-            disabled={isResetButtonDisabled} // Disable button if conditions are not met
-          >
-            Reset Password
-          </button>
-        </Modal.Body>
-      </Modal>
+  {/* Reset Password Modal */}
+  <Modal show={showResetPasswordModal} onHide={() => setShowResetPasswordModal(false)} centered>
+  <Modal.Header closeButton>
+  <Modal.Title>Reset Password</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+  <div className="mb-3">
+  <label htmlFor="newPassword" className="form-label">New Password</label>
+  <input
+  type="password"
+  id="newPassword"
+  className="form-control"
+  value={passwordData.newPassword}
+  onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+  />
+  </div>
+  <div className="mb-3">
+  <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+  <input
+  type="password"
+  id="confirmPassword"
+  className="form-control"
+  value={passwordData.confirmPassword}
+  onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+  />
+  </div>
+  <button
+  className="btn w-100"
+  style={{
+    backgroundColor: 'navy',
+    color: 'white',
+    transition: 'background-color 0.3s',
+    }}
+    onMouseOver={(e) => (e.target.style.backgroundColor = 'red')}
+    onMouseOut={(e) => (e.target.style.backgroundColor = 'navy')}
+    onClick={handleResetPassword}
+    disabled={isResetButtonDisabled} // Disable button if conditions are not met
+    >
+    Reset Password
+    </button>
+    </Modal.Body>
+    </Modal>
     </div>
-  );
-};
+    );
+  };
 
-export default UserDashboard;
+  export default UserDashboard;

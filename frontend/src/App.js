@@ -10,6 +10,7 @@ import AppNavbar from './components/AppNavbar';
 import ImageCards from './components/ImageCards';
 import BookingForm from './components/BookingForm';
 import SearchResults from './components/SearchResults';
+import AllFlights from './components/AllFlights'
 
 // Admin
 import AdminDashboard from './components/AdminDashboard';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/signup" element={<SignUpModal />} />
           <Route path="/login" element={<Login />} />
           <Route path="/book" element={<BookingForm />} />
+          <Route path="/flights" element={<AllFlights />} /> 
           <Route path="/results" element={<SearchResults />} />
 
           {/* Protected: User Dashboard */}

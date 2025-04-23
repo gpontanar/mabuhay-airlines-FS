@@ -1,5 +1,6 @@
 const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:4000";
 
+
 // Utility function to get the JWT token from localStorage or sessionStorage
 const getToken = () => {
   return localStorage.getItem("token") || sessionStorage.getItem("token");
@@ -19,7 +20,7 @@ export const fetchFlightsData = async (
       query = `?from=${departureCity}&to=${destinationCity}&date=${departureDate}&class=${cabinClass}`;
     }
 
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/flights${query}`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/search${query}`);
     if (!response.ok) throw new Error("Flight data fetch failed");
 
     return await response.json();
@@ -29,40 +30,39 @@ export const fetchFlightsData = async (
   }
 };
 
-// Admin: Get all flights (returns an array directly)
+
+// Get all flights (admin gets all, users get active flights)
 export const getAllFlights = async () => {
   try {
-    const token = getToken(); // Get the token
-    if (!token) {
-      throw new Error("No token available for authentication.");
+    const token = getToken();
+
+    const headers = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
     }
 
-    // Fetch data from the API
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/all`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/`, {
+      headers,
     });
 
     if (!res.ok) {
       throw new Error(`Failed to get flights. Status: ${res.status}`);
     }
 
-    // Parse the response JSON
     const data = await res.json();
 
-    // Handle case where no data is returned
     if (!Array.isArray(data)) {
       console.error("Unexpected API response format:", data);
       return [];
     }
-
-    return data; // Return the flight data array
+    console.log("Flight data received:", data);
+    return data;
   } catch (err) {
-    console.error("Admin API error (getAllFlights):", err);
-    return []; // Fallback to empty array if error occurs
+    console.error("API error (getAllFlights):", err);
+    return [];
   }
 };
+
 
 // Admin: Create flight
 export const createFlight = async (flightData) => {

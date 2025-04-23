@@ -57,7 +57,7 @@ export default function AppNavbar() {
                 <Link className="nav-link" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Flights</a>
+                <Link className="nav-link" to="/flights">Flights</Link>
               </li>
               <li className="nav-item">
                 <a

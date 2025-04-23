@@ -4,9 +4,28 @@ const Airline = require('../models/Airline');
 
 
 
+exports.getAllFlights = async (req, res) => {
+  try {
+    const user = req.user; 
+
+    // If the user is an admin, return all flights
+    if (user && user.role === 'admin') {
+      const flights = await Flight.find().populate('airline', 'name');
+      return res.status(200).json(flights);
+    }
+
+    // For regular users, return only active flights
+    const flights = await Flight.find({ isActive: true }).populate('airline', 'name');
+    res.status(200).json(flights);
+    
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 
 // Get all flights with optional search filters
-exports.getAllFlights = async (req, res) => {
+exports.searchFlights = async (req, res) => {
   try {
     const { from, to, departure, arrival } = req.query;
 
