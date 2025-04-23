@@ -3,8 +3,11 @@ const router = express.Router();
 const flightController = require('../controllers/flight');
 const { verify, isLoggedIn, verifyAdmin } = require("../auth");
 
-// Route to get all flights
-router.get('/all', flightController.getAllFlights);
+// Route to get all flights (admin gets all, user gets only active flights)
+router.get('/', verify, flightController.getAllFlights);
+
+// Route to search flights
+router.get('/search', flightController.searchFlights);
 
 // Route to get a flight by ID
 router.get('/:id', verify, verifyAdmin, flightController.getFlightById);
