@@ -5,7 +5,7 @@ const { verify, isLoggedIn } = require('../auth');
 
 router.post('/signup', userController.signUp);
 router.post('/login', userController.login);
-router.get('/profile', verify, isLoggedIn, userController.getProfile);
+router.get('/:id', verify, isLoggedIn, userController.getProfile);
 
 //[SECTION] Route for setting user as admin
 router.patch("/:id/set-as-admin", verify, isLoggedIn, userController.setUserAsAdmin);
