@@ -32,6 +32,9 @@ spec:
         - name: web-api
           image: $DOCKER_IMAGE
           imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: web-api
           resources:
             limits:
               cpu: 100m
@@ -50,14 +53,14 @@ metadata:
   name: web-api
   labels:
     app: web-api
-    tier: frontend
+    tier: backend
 spec:
   ports:
     - port: 4000
       targetPort: 4000
   selector:
     app: web-api
-    tier: frontend
+    tier: backend
 
 ---
 

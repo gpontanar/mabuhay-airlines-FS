@@ -30,6 +30,9 @@ spec:
         - name: web-app
           image: $DOCKER_IMAGE
           imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: web-app
           resources:
             limits:
               cpu: 100m
