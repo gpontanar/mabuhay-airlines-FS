@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Swal from 'sweetalert2';
+import UserContext from '../context/UserContext';
+
 
 const FlightCard = ({ flight, onBookClick }) => {
+  const { user } = useContext(UserContext); // Get the user context
+
   // Skip rendering if the flight is archived (isActive: false)
   if (!flight.isActive) return null;
 
@@ -20,6 +25,27 @@ const FlightCard = ({ flight, onBookClick }) => {
     currency: 'PHP',
   }).format(flight.price);
 
+  const handleBookClick = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      Swal.fire({
+        title: 'Login Required',
+        text: 'Please log in to book a flight.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+    } else if (user.isAdmin) {
+      Swal.fire({
+        title: 'Access Denied',
+        text: 'Only regular users can book flights!',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    } else {
+      onBookClick(flight._id);
+    }
+  };
+
   return (
     <div className="col-md-6 col-lg-4 mb-4">
       <div className="flight-card">
@@ -35,9 +61,6 @@ const FlightCard = ({ flight, onBookClick }) => {
           <h5 className="card-title text-center">{flight.airline.name}</h5>
           <p className="card-text">
             <strong>Route:</strong> {flight.from} → {flight.to}
-          </p>
-          <p className="card-text">
-            <span className="icon-animate"></span> <strong>Flight Number:</strong> {flight.airline.name}
           </p>
           <p className="card-text">
             <strong>Departure:</strong> {new Date(flight.departure).toLocaleString()}
@@ -63,7 +86,11 @@ const FlightCard = ({ flight, onBookClick }) => {
           <p className="card-text">
             <strong>Price:</strong> <span className="price-tag">{formattedPrice}</span>
           </p>
-          <button className="btn w-100 mt-2" onClick={() => onBookClick(flight._id)}>
+          <button
+            className="btn w-100 mt-2"
+            onClick={handleBookClick}
+            disabled={user?.isAdmin} // Disable button if user is an admin
+          >
             Book Now
           </button>
         </div>

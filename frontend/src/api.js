@@ -30,28 +30,40 @@ export const fetchFlightsData = async (
   }
 };
 
-
-// Get all flights (admin gets all, users get active flights)
 export const getAllFlights = async () => {
   try {
-    const token = localStorage.getItem("token");
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights`, {
-      headers,
-    });
-
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights`);
     if (!res.ok) {
       throw new Error(`Failed to fetch flights. Status: ${res.status}`);
     }
-
-    const data = await res.json();
-    return data;
+    return await res.json();
   } catch (err) {
     console.error("Error fetching flights:", err);
     return [];
   }
 };
+
+// Get all flights (admin gets all, users get active flights)
+// export const getAllFlights = async () => {
+//   try {
+//     const token = localStorage.getItem("token");
+//     const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+//     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights`, {
+//       headers,
+//     });
+
+//     if (!res.ok) {
+//       throw new Error(`Failed to fetch flights. Status: ${res.status}`);
+//     }
+
+//     const data = await res.json();
+//     return data;
+//   } catch (err) {
+//     console.error("Error fetching flights:", err);
+//     return [];
+//   }
+// };
 
 // Admin: Create flight
 export const createFlight = async (flightData) => {

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchFlightDetails } from '../api'; 
-import { createBooking } from '../api'; 
+import { fetchFlightDetails, createBooking } from '../api'; // Import API functions
 
 const BookingFlight = () => {
   const navigate = useNavigate();
-  const { flightId } = useParams(); // Getting the flightId from URL params
+  const { flightId } = useParams(); // Get the flightId from URL params
   const [flight, setFlight] = useState(null);
   const [passengerCount, setPassengerCount] = useState(1);
   const [cabinClass, setCabinClass] = useState('Economy');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch flight details when the component mounts
   useEffect(() => {
     const getFlightDetails = async () => {
       try {
@@ -28,7 +28,12 @@ const BookingFlight = () => {
   }, [flightId]);
 
   const handleBookingSubmit = async () => {
-    const userId = 'USER_ID'; // Replace with the actual user ID from the context or session
+    const userId = JSON.parse(localStorage.getItem('user'))?.id; // Get user ID from localStorage
+    if (!userId) {
+      setError('User not logged in. Please log in to book a flight.');
+      return;
+    }
+
     const bookingData = {
       flightId,
       userId,
@@ -65,7 +70,7 @@ const BookingFlight = () => {
               <p><strong>To:</strong> {flight.to}</p>
               <p><strong>Departure:</strong> {new Date(flight.departure).toLocaleString()}</p>
               <p><strong>Arrival:</strong> {new Date(flight.arrival).toLocaleString()}</p>
-              <p><strong>Price:</strong> ${flight.price}</p>
+              <p><strong>Price:</strong> ₱{flight.price}</p>
             </div>
             <div className="col-md-6">
               <h4>Booking Details</h4>
@@ -79,3 +84,33 @@ const BookingFlight = () => {
                   onChange={(e) => setPassengerCount(e.target.value)}
                   min="1"
                   max="10"
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="cabinClass" className="form-label">Cabin Class</label>
+                <select
+                  id="cabinClass"
+                  className="form-select"
+                  value={cabinClass}
+                  onChange={(e) => setCabinClass(e.target.value)}
+                >
+                  <option value="Economy">Economy</option>
+                  <option value="Business">Business</option>
+                  <option value="First">First</option>
+                </select>
+              </div>
+              <button
+                className="btn btn-primary"
+                onClick={handleBookingSubmit}
+              >
+                Confirm Booking
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default BookingFlight;

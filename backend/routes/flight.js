@@ -4,7 +4,7 @@ const flightController = require('../controllers/flight');
 const { verify, isLoggedIn, verifyAdmin } = require("../auth");
 
 // Route to get all flights (admin gets all, user gets only active flights)
-router.get('/', verify, flightController.getAllFlights);
+router.get('/', flightController.getAllFlights);
 
 // Route to search flights
 router.get('/search', flightController.searchFlights);

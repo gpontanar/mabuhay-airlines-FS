@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getAllFlights } from '../api'; 
-import FlightCard from './FlightCard'; 
+import { getAllFlights } from '../api';
+import FlightCard from './FlightCard';
+import Swal from 'sweetalert2';
 
 const AllFlights = () => {
   const [flights, setFlights] = useState([]);
@@ -11,9 +12,7 @@ const AllFlights = () => {
       setLoading(true);
       try {
         const data = await getAllFlights();
-        // Filter out flights where isActive is false
-        const activeFlights = data.filter((flight) => flight.isActive);
-        setFlights(activeFlights);
+        setFlights(data); // Set all active flights
       } catch (error) {
         console.error("Error fetching flights:", error);
       } finally {
@@ -25,8 +24,18 @@ const AllFlights = () => {
   }, []);
 
   const handleBookClick = (flightId) => {
-    console.log(`Redirecting to booking page for flight ID: ${flightId}`);
-    // Add navigation logic here
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      Swal.fire({
+        title: 'Login Required',
+        text: 'Please log in to book a flight.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+    } else {
+      console.log(`Redirecting to booking page for flight ID: ${flightId}`);
+      // Add navigation logic here
+    }
   };
 
   if (loading) {
