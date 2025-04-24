@@ -32,10 +32,17 @@ export const fetchFlightsData = async (
 
 export const getAllFlights = async () => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights`);
+    const token = localStorage.getItem("token");
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights`, {
+      headers,
+    });
+
     if (!res.ok) {
       throw new Error(`Failed to fetch flights. Status: ${res.status}`);
     }
+
     return await res.json();
   } catch (err) {
     console.error("Error fetching flights:", err);

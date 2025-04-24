@@ -574,6 +574,7 @@ button[type="submit"]:hover {
 }
 
 /* Flight Card Styles */
+
 .flight-card {
   display: flex;
   flex-direction: column;
@@ -597,8 +598,11 @@ button[type="submit"]:hover {
 }
 
 .flight-card-header img {
-  max-width: 150px;
-  max-height: 50px;
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  max-width: cover;
+  max-height: cover ;
   object-fit: contain;
 }
 

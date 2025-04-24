@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import UserContext from '../context/UserContext';
+import Swal from 'sweetalert2';
 import { getAllFlights } from '../api';
 import FlightCard from './FlightCard';
-import Swal from 'sweetalert2';
 
 const AllFlights = () => {
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(UserContext); // Get the user context
 
   useEffect(() => {
     const fetchFlights = async () => {
@@ -24,12 +26,18 @@ const AllFlights = () => {
   }, []);
 
   const handleBookClick = (flightId) => {
-    const user = JSON.parse(localStorage.getItem('user'));
     if (!user) {
       Swal.fire({
         title: 'Login Required',
         text: 'Please log in to book a flight.',
         icon: 'warning',
+        confirmButtonText: 'OK',
+      });
+    } else if (user.isAdmin) {
+      Swal.fire({
+        title: 'Access Denied',
+        text: 'Only regular users can book flights!',
+        icon: 'error',
         confirmButtonText: 'OK',
       });
     } else {
@@ -48,7 +56,12 @@ const AllFlights = () => {
       <div className="row">
         {flights.length > 0 ? (
           flights.map((flight) => (
-            <FlightCard key={flight._id} flight={flight} onBookClick={handleBookClick} />
+            <FlightCard
+              key={flight._id}
+              flight={flight}
+              onBookClick={handleBookClick}
+              isAdmin={user?.isAdmin} // Pass isAdmin to FlightCard
+            />
           ))
         ) : (
           <div>No flights available at this time.</div>

@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import UserContext from '../context/UserContext';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../index.css';
+import airlineLogo from '../assets/Mabuhay-flight.png'; 
 
 const FlightCard = ({ flight, onBookClick }) => {
   const { user } = useContext(UserContext); // Get the user context
+  
 
   // Skip rendering if the flight is archived (isActive: false)
   if (!flight.isActive) return null;
@@ -26,7 +29,16 @@ const FlightCard = ({ flight, onBookClick }) => {
   }).format(flight.price);
 
   const handleBookClick = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    if (user?.isAdmin) {
+      Swal.fire({
+        title: 'Access Denied',
+        text: 'Only regular users can book flights!',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+      return; // Prevent further execution
+    }
+
     if (!user) {
       Swal.fire({
         title: 'Login Required',
@@ -34,31 +46,25 @@ const FlightCard = ({ flight, onBookClick }) => {
         icon: 'warning',
         confirmButtonText: 'OK',
       });
-    } else if (user.isAdmin) {
-      Swal.fire({
-        title: 'Access Denied',
-        text: 'Only regular users can book flights!',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
-    } else {
-      onBookClick(flight._id);
+      return; // Prevent further execution
     }
+
+    // Proceed with booking if the user is not an admin
+    onBookClick(flight._id);
   };
 
   return (
     <div className="col-md-6 col-lg-4 mb-4">
       <div className="flight-card">
-        <div className="flight-card-header text-center">
+      <div className="flight-card-header text-center">
           <img
-            src={flight.airline.logoUrl}
-            alt={flight.airline.name}
-            className="img-fluid"
-            style={{ maxWidth: '150px', maxHeight: '50px' }}
+            src={flight.airline.logoUrl || airlineLogo}
+            alt={flight.airline.name || 'Airline Logo'}
+            className="img-fluid flight-logo"
           />
         </div>
         <div className="flight-card-body p-3">
-          <h5 className="card-title text-center">{flight.airline.name}</h5>
+          <h5 className="card-title text-center mb-4">{flight.airline.name}</h5>
           <p className="card-text">
             <strong>Route:</strong> {flight.from} → {flight.to}
           </p>
@@ -89,7 +95,6 @@ const FlightCard = ({ flight, onBookClick }) => {
           <button
             className="btn w-100 mt-2"
             onClick={handleBookClick}
-            disabled={user?.isAdmin} // Disable button if user is an admin
           >
             Book Now
           </button>

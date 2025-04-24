@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react"; // Add useContext here
 import { useNavigate } from "react-router-dom";
 import { getAllFlights, toggleArchiveFlight } from "../api";
 import FlightTable from "./FlightTable";
+import UserContext from '../context/UserContext';
 
 const AdminDashboard = () => {
   const [flights, setFlights] = useState([]);
   const navigate = useNavigate();
+  const { user } = useContext(UserContext); // Get the user context
 
   useEffect(() => {
     const fetchFlights = async () => {
-      const response = await getAllFlights();
-      setFlights(response); // Load all flights, including archived ones
+      try {
+        const response = await getAllFlights();
+        setFlights(response); // Load all flights, including archived ones
+      } catch (err) {
+        console.error("Error fetching flights:", err);
+      }
     };
+  
     fetchFlights();
   }, []);
-
   const handleToggleArchive = async (flightId) => {
     try {
       const response = await toggleArchiveFlight(flightId);

@@ -24,13 +24,12 @@ const Airline = require('../models/Airline');
 
 exports.getAllFlights = async (req, res) => {
   try {
-    const flights = await Flight.find({ isActive: true }).populate('airline', 'name'); // Only return active flights
+    const flights = await Flight.find().populate('airline', 'name'); // Fetch all flights
     res.status(200).json(flights);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 // Get all flights with optional search filters
 exports.searchFlights = async (req, res) => {
