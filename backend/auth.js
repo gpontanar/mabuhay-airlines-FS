@@ -1,10 +1,7 @@
 const jwt = require('jsonwebtoken');
-// [SECTION] Environment Setup
 require('dotenv').config();
 
 
-// [SECTION] Token Creation
- 
 
 module.exports.createAccessToken = (user) => {
 	// The data will be received from the registration form
@@ -19,47 +16,35 @@ module.exports.createAccessToken = (user) => {
 
 }
 
+
 // [SECTION] Token Verification
 
 module.exports.verify = (req, res, next) => {
-	console.log(req.headers.authorization);
+    console.log("Authorization Header:", req.headers.authorization);
 
-	let token = req.headers.authorization;
+    let token = req.headers.authorization;
 
-	if(typeof token === "undefined"){
-		return res.status(403).send({ auth: "Failed.", message: "Action Forbidden" })
-	}else{
-		console.log(token);
-		token = token.slice(7, token.length);
-		console.log(token);
+    if (typeof token === "undefined") {
+        console.error("Token is missing");
+        return res.status(403).send({ auth: "Failed", message: "Action Forbidden" });
+    } else {
+        token = token.slice(7, token.length); // Remove "Bearer " prefix
+        console.log("Extracted Token:", token);
 
-		// [SECTION] Token Decryption
-	
-		jwt.verify(token, process.env.JWT_SECRET_KEY, function(err, decodedToken){
-			if(err){
-
-				return res.status(403).send({
-					auth: "Failed",
-					// message: err.message
-					message: "Action Forbidden"
-				});
-			
-			}else{
-
-				console.log("result from verify method:")
-				console.log(decodedToken);
-
-				// req.user = decodedToken.id;
-				req.user = decodedToken;
-
-				next();
-			}
-		})
-	}
-}
+        jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decodedToken) {
+            if (err) {
+                console.error("Token verification failed:", err.message);
+                return res.status(403).send({ auth: "Failed", message: "Action Forbidden" });
+            } else {
+                console.log("Decoded Token:", decodedToken);
+                req.user = decodedToken;
+                next();
+            }
+        });
+    }
+};
 
 // [SECTION] Verify Admin
-
 module.exports.verifyAdmin = (req, res, next) => {
 
 	if(req.user.isAdmin){

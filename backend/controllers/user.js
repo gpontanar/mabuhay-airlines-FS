@@ -1,12 +1,13 @@
 const User = require('../models/User');
 // const bcrypt = require('bcryptjs');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const auth = require('../auth');
 
 const { errorHandler } = auth;
 
 module.exports.signUp = (req, res) => {
-  const { email, mobileNumber, password } = req.body;
+  const { email, mobileNumber, password, isAdmin} = req.body;
   
             // Validate email
   if (!email || !email.includes("@")) {
@@ -26,7 +27,9 @@ module.exports.signUp = (req, res) => {
             // Hash the password
   const hashedPassword = bcrypt.hashSync(password, 10);
   
-            // Create a new user
+  // const newUser = new User({ email, password: hashedPassword, isAdmin });
+  
+  // Create a new user
   const newUser = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -67,11 +70,11 @@ module.exports.signUp = (req, res) => {
                         role: result.isAdmin ? "admin" : "user",
                         firstName: result.firstName,
                         lastName: result.lastName,
-                        prefix: result.prefix, // Include prefix
-                        gender: result.gender, // Include gender
-                        mobileNumber: result.mobileNumber, // Include mobile number
-                        dateOfBirth: result.dateOfBirth, // Include date of birth
-                        address: result.address, // Include address
+                        // prefix: result.prefix, // Include prefix
+                        // gender: result.gender, // Include gender
+                        // mobileNumber: result.mobileNumber, // Include mobile number
+                        // dateOfBirth: result.dateOfBirth, // Include date of birth
+                        // address: result.address, // Include address
                       },
                     });
                   } else {

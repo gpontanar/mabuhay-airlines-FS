@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { UserProvider } from './context/UserContext';  // Import UserProvider
 
+
 import Home from "./pages/Home";
 import Login from './components/Login';
 import SignUpModal from './components/SignUp';
