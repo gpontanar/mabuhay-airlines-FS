@@ -1,10 +1,34 @@
-const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:4000";
-
+const API_BASE = process.env.REACT_APP_API_URL 
 
 // Utility function to get the JWT token from localStorage or sessionStorage
 const getToken = () => {
   return localStorage.getItem("token") || sessionStorage.getItem("token");
 };
+
+
+
+// Create a new booking
+export const createBooking = async (bookingData) => {
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/bookings`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify(bookingData),
+    });
+
+    if (!res.ok) throw new Error("Failed to create booking");
+    return await res.json();
+  } catch (err) {
+    console.error("API error (createBooking):", err);
+    return null;
+  }
+};
+
+
+
 
 // User-side flight search
 export const fetchFlightsData = async (
@@ -29,6 +53,28 @@ export const fetchFlightsData = async (
     return [];
   }
 };
+
+
+
+// Fetch flight details by ID
+export const fetchFlightDetails = async (flightId, token) => {
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/flights/${flightId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch flight details");
+
+    return await res.json();
+  } catch (err) {
+    console.error("API error (fetchFlightDetails):", err);
+    return null;
+  }
+};
+
 
 export const getAllFlights = async () => {
   try {
@@ -140,4 +186,17 @@ export const toggleArchiveFlight = async (id) => {
     console.error("Admin API error (toggleArchiveFlight):", err);
     return null;
   }
+};
+
+
+// Create passenger
+export const createPassenger = async (passengerData) => {
+  const res = await fetch(`${process.env.REACT_APP_API_URL}/api/passengers`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(passengerData),
+  });
+
+  if (!res.ok) throw new Error('Failed to create passenger');
+  return await res.json();
 };

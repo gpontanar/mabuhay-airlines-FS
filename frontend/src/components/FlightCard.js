@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import airlineLogo from '../assets/Mabuhay-flight.png'; 
 
+
+
 const FlightCard = ({ flight, onBookClick }) => {
-  const { user } = useContext(UserContext); // Get the user context
+  const { user } = useContext(UserContext); 
+  const navigate = useNavigate(); 
   
 
   // Skip rendering if the flight is archived (isActive: false)
@@ -28,17 +32,7 @@ const FlightCard = ({ flight, onBookClick }) => {
     currency: 'PHP',
   }).format(flight.price);
 
-  const handleBookClick = () => {
-    if (user?.isAdmin) {
-      Swal.fire({
-        title: 'Access Denied',
-        text: 'Only regular users can book flights!',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
-      return; // Prevent further execution
-    }
-
+   const handleBookClick = () => {
     if (!user) {
       Swal.fire({
         title: 'Login Required',
@@ -46,11 +40,21 @@ const FlightCard = ({ flight, onBookClick }) => {
         icon: 'warning',
         confirmButtonText: 'OK',
       });
-      return; // Prevent further execution
+      return;
     }
 
-    // Proceed with booking if the user is not an admin
-    onBookClick(flight._id);
+    if (user?.isAdmin) {
+      Swal.fire({
+        title: 'Access Denied',
+        text: 'Only regular users can book flights!',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+      return;
+    }
+
+   
+    navigate(`/book/${flight._id}`);
   };
 
   return (

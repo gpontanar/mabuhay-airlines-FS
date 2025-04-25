@@ -8,9 +8,13 @@ import SignUpModal from './components/SignUp';
 import UserDashboard from './components/UserDashboard';
 import AppNavbar from './components/AppNavbar';
 import ImageCards from './components/ImageCards';
-import BookingForm from './components/BookingForm';
+
 import SearchResults from './components/SearchResults';
 import AllFlights from './components/AllFlights'
+import BookingFlight from './components/BookingFlight';
+import Passenger from './components/Passenger';
+import Payment from './components/Payment';
+import BookingConfirmation from './components/BookingConfirmation';
 
 // Admin
 import AdminDashboard from './components/AdminDashboard';
@@ -31,7 +35,11 @@ function App() {
           <Route path="/explore" element={<ImageCards />} />
           <Route path="/signup" element={<SignUpModal />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/book" element={<BookingForm />} />
+      
+          <Route path="/book/:flightId" element={<BookingFlight />} />
+          <Route path="/passenger" element={<Passenger />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/booking-confirmation" element={<BookingConfirmation />} />
           <Route path="/flights" element={<AllFlights />} /> 
           <Route path="/results" element={<SearchResults />} />
 
