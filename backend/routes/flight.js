@@ -10,13 +10,13 @@ router.get('/', flightController.getAllFlights);
 router.get('/search', flightController.searchFlights);
 
 // Route to get a flight by ID
-router.get('/:id', verify, verifyAdmin, flightController.getFlightById);
+router.get('/:id',  flightController.getFlightById);
 
 // Route to create a new flight
 router.post('/add', verify, verifyAdmin, flightController.createFlight);
 
 // Route to update a flight by ID
-router.put('/:id', verify, verifyAdmin, flightController.updateFlight);
+router.put('/:id', verify, flightController.updateFlight);
 
 // Route to delete a flight by ID
 router.delete('/:id', verify, verifyAdmin, flightController.deleteFlight);
