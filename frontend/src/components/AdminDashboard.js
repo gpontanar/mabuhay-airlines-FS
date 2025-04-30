@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useContext } from "react"; // Add useContext here
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllFlights, toggleArchiveFlight } from "../api";
+import { getAllFlights, toggleArchiveFlight, getPassengersByFlight } from "../api"; // Import getPassengersByFlight
 import FlightTable from "./FlightTable";
+import PassengerModal from './PassengerModal';
 import UserContext from '../context/UserContext';
 
 const AdminDashboard = () => {
   const [flights, setFlights] = useState([]);
+  const [passengers, setPassengers] = useState([]); // State for passengers
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
   const navigate = useNavigate();
   const { user } = useContext(UserContext); // Get the user context
 
@@ -18,9 +21,10 @@ const AdminDashboard = () => {
         console.error("Error fetching flights:", err);
       }
     };
-  
+
     fetchFlights();
   }, []);
+
   const handleToggleArchive = async (flightId) => {
     try {
       const response = await toggleArchiveFlight(flightId);
@@ -36,6 +40,16 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleViewPassengers = async (flightId) => {
+    try {
+      const data = await getPassengersByFlight(flightId); // Fetch passengers for the flight
+      setPassengers(data);
+      setShowModal(true); // Show the modal with passenger details
+    } catch (err) {
+      console.error("Error fetching passengers:", err);
+    }
+  };
+
   return (
     <div className="container">
       <h2>Admin Dashboard</h2>
@@ -46,7 +60,14 @@ const AdminDashboard = () => {
         flights={flights}
         onEdit={(flight) => navigate(`/admin/edit-flight/${flight._id}`)}
         onToggleArchive={handleToggleArchive}
+        onViewPassengers={handleViewPassengers} // Pass the handler to FlightTable
       />
+      {showModal && (
+        <PassengerModal
+          passengers={passengers}
+          onClose={() => setShowModal(false)} // Close the modal
+        />
+      )}
     </div>
   );
 };

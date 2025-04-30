@@ -200,3 +200,23 @@ export const createPassenger = async (passengerData) => {
   if (!res.ok) throw new Error('Failed to create passenger');
   return await res.json();
 };
+
+// Add an API Function to Fetch Passengers by Flight ID
+export const getPassengersByFlight = async (flightId) => {
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/passengers/flight/${flightId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch passengers');
+    }
+
+    return await res.json();
+  } catch (err) {
+    console.error('Error fetching passengers:', err);
+    return [];
+  }
+};
