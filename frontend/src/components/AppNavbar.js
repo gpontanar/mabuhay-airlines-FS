@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -28,15 +28,30 @@ export default function AppNavbar() {
     navigate('/');
   };
 
-  const goToDashboard = () => {
-    if (!user) return navigate('/login');
+// const goToDashboard = () => {
+//   if (!user) {
+//     navigate('/login'); // Redirect to login if no user is logged in
+//     return;
+//   }
 
-    if (user.role === 'admin') {
-      navigate('/admin');
-    } else {
-      navigate('/user-dashboard');
-    }
-  };
+//   if (user.isAdmin) {
+//     navigate('/admin'); // Redirect admin users to the admin dashboard
+//   } else {
+//     navigate('/user-dashboard'); // Redirect regular users to the user dashboard
+//   }
+// };
+const goToDashboard = () => {
+  if (!user) {
+    navigate('/login'); // Redirect to login if no user is logged in
+    return;
+  }
+
+  if (user.isAdmin) {
+    navigate('/admin'); // Redirect admin users to the admin dashboard
+  } else {
+    navigate('/user-dashboard'); // Redirect regular users to the user dashboard
+  }
+};
 
   return (
     <>
@@ -77,20 +92,37 @@ export default function AppNavbar() {
             </ul>
 
             <div className="auth-buttons">
-              {user ? (
-                <>
-                  <Button variant="outline-light" className="me-2" onClick={goToDashboard}>
-                    {user.role === 'admin' ? 'Admin Dashboard' : 'User Dashboard'}
-                  </Button>
-                  <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
-                </>
-              ) : (
-                <>
-                  <Button variant="outline-light" className="me-2" onClick={() => setShowLogin(true)}>Login</Button>
-                  <Button variant="outline-light" onClick={() => setShowSignUp(true)}>Sign Up</Button>
-                </>
-              )}
-            </div>
+  {user ? (
+    <>
+      <Button
+        variant="outline-light"
+        className="me-2"
+        onClick={goToDashboard}
+      >
+        {user.isAdmin ? 'Admin Dashboard' : 'User Dashboard'}
+      </Button>
+      <Button variant="outline-light" onClick={handleLogout}>
+        Logout
+      </Button>
+    </>
+  ) : (
+    <>
+      <Button
+        variant="outline-light"
+        className="me-2"
+        onClick={() => setShowLogin(true)}
+      >
+        Login
+      </Button>
+      <Button
+        variant="outline-light"
+        onClick={() => setShowSignUp(true)}
+      >
+        Sign Up
+      </Button>
+    </>
+  )}
+</div>
           </div>
         </div>
       </nav>

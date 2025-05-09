@@ -1,88 +1,72 @@
-
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import Swal from 'sweetalert2';
-import 'notyf/notyf.min.css';
-import '../index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Login = ({ closeModal, openSignUpModal }) => {
+const Login = ({ closeModal }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
-  const { setUser } = useContext(UserContext); 
-
-
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-const handleSubmit = async e => {
-  e.preventDefault();
-  try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await res.json();
-      console.log(data);  // Add this line to inspect the response
-
-    if (res.ok) {
-      // Check if user exists in the response
-      if (data.user && data.user.role) {
-        // Store token and user
-        localStorage.setItem("token", data.access);
-        localStorage.setItem("user", JSON.stringify(data.user));
-
-
-        setUser(data.user); 
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await res.json();
+      if (res.ok) {
+        // Store user and token in localStorage
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('token', data.access);
+  
+        // Set user in context
+        setUser(data.user);
+  
+        // Display success message
         Swal.fire({
           title: 'Mabuhay!',
           text: 'Welcome to your Mabuhay Airline account.',
           icon: 'success',
           confirmButtonText: 'Go to Dashboard',
         }).then(() => {
-          closeModal?.();
-          if (data.user.role === 'admin') {
-              navigate('/admin');
-            } else {
-              navigate('/user-dashboard');
-            }
-          });
+          closeModal?.(); // Close the login modal
+  
+          // Redirect based on isAdmin status
+          if (data.user.isAdmin) {
+            navigate('/admin'); // Redirect to Admin Dashboard
+          } else {
+            navigate('/user-dashboard'); // Redirect to User Dashboard
+          }
+        });
       } else {
-
-          
+        // Handle login failure
         Swal.fire({
           title: 'Login Failed',
-          text: 'User information is missing or invalid.',
+          text: data.message || 'Incorrect username or password, please try again!',
           icon: 'error',
           confirmButtonText: 'OK',
         });
       }
-    } else {
+    } catch (err) {
+      console.error('Error during login:', err);
       Swal.fire({
-        title: 'Login Failed',
-        text: data.message || 'Incorrect username or password, please try again!',
+        title: 'Error',
+        text: 'Something went wrong. Please try again later.',
         icon: 'error',
         confirmButtonText: 'OK',
       });
     }
-  } catch (err) {
-    console.error(err);
-    Swal.fire({
-      title: 'Error',
-      text: 'Something went wrong. Please try again later.',
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
-  }
-};
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -100,40 +84,17 @@ const handleSubmit = async e => {
       </div>
       <div className="mb-3">
         <label htmlFor="password" className="form-label">Password</label>
-        <div className="input-group">
-          <input
-            type={showPassword ? 'text' : 'password'}
-            id="password"
-            name="password"
-            placeholder="Password"
-            className="form-control"
-            onChange={handleChange}
-            required
-          />
-          <button
-            type="button"
-            className="btn btn-outline-white"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
-          </button>
-        </div>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          className="form-control"
+          onChange={handleChange}
+          required
+        />
       </div>
       <button type="submit" className="btn btn-primary w-100">Login</button>
-      <div className="d-flex justify-content-between mt-3">
-        <a href="#" className="text-decoration-none">Forgot password?</a>
-        {/* <a
-          href="#"
-          className="text-decoration-none"
-          onClick={(e) => {
-            e.preventDefault();
-            closeModal(); // Close the login modal
-            openSignUpModal(); // Open the sign-up modal
-          }}
-        >
-          Not a member? Sign up
-        </a> */}
-      </div>
     </form>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import airlinelogo from '../assets/mabuhay-logo.png'
 
 const Footer = () => {
@@ -6,22 +6,17 @@ const Footer = () => {
     <footer className="footer">
       <div className="container">
         <div className="row">
-          <div className="col-md-3 footer-logo-section mb-4">
+        <div className="col-md-3 footer-logo-section mb-4">
             <img src={airlinelogo} alt="Mabuhay Airways Logo" className="logo" />
             <h5 className="text-white">Mabuhay Airline</h5>
             <p className="text-white mb-3">Turning Travel Dreams into Destinations</p>
-          </div>
-          <div class="col-md-8">
-                <div class="footer-links" id="socials" >
-                    <h5>Connect</h5>
-                    <div class="social-icons mb-5">
-                        <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
-                        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
-                        <a href="https://youtube.com"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
+            <div className="social-icons">
+              <a href="https://facebook.com"><i className="fab fa-facebook"></i></a>
+              <a href="https://twitter.com"><i className="fab fa-twitter"></i></a>
+              <a href="https://instagram.com"><i className="fab fa-instagram"></i></a>
+              <a href="https://youtube.com"><i className="fab fa-youtube"></i></a>
             </div>
+          </div>
           <div className="col-md-9 footer-links-section">
             <div className="row">
               <div className="col-sm-3">
@@ -63,7 +58,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
-       
         <div className="copyright text-center">
           <p>© 2025 Mabuhay Airline. All rights reserved.</p>
         </div>
