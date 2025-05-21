@@ -2,7 +2,14 @@ const Ticket = require('../models/Ticket');
 
 exports.createTicket = async (req, res) => {
   try {
-    const ticket = new Ticket(req.body);
+    const ticket = new Ticket({
+      flight: req.body.flight,
+      passenger: req.body.passenger,
+      booking: req.body.booking,
+      seatNumber: req.body.seatNumber,
+      price: req.body.price,
+      issueDate: new Date(), 
+    });
     await ticket.save();
     res.status(201).json(ticket);
   } catch (err) {

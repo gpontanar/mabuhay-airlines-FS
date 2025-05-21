@@ -4,7 +4,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const Payment = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { passenger, flightId, userId, price } = state;
+  // Destructure ticket from state
+  const { passenger, flight, flightId, ticket, passengerCount, cabinClass, userId } = state || {};
+  const count = passengerCount || 1;
 
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
   const [cardNumber, setCardNumber] = useState('');
@@ -13,54 +15,104 @@ const Payment = () => {
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!cardNumber || !expiryDate || !cvv) {
-      alert('Please fill in all payment details');
+  if (!cardNumber || !expiryDate || !cvv) {
+    alert('Please fill in all payment details');
+    return;
+  }
+
+  try {
+    // 1. Create the booking
+    const bookingRes = await fetch(`${process.env.REACT_APP_API_URL}/api/bookings/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        flightId,
+        userId,
+        passengerCount: 1, // or your actual count
+        cabinClass: 'Economy', // or your actual class
+      }),
+    });
+    const bookingData = await bookingRes.json();
+
+    if (!bookingRes.ok) {
+      alert(bookingData.error || 'Booking creation failed. Please try again.');
       return;
     }
 
-    try {
-      const paymentData = {
-        ticketId: passenger._id,     
-        amount: price,
-        paymentStatus: 'completed',
-      };
+    const bookingId = bookingData._id;
+    const ticketPrice = bookingData.totalFare; // <-- get the correct price
 
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/payments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(paymentData),
-      });
+    // 2. Generate a seat number (simple example)
+    const seatNumber = 'A' + Math.floor(Math.random() * 100 + 1);
 
-      const data = await res.json();
+    // 3. Create the ticket
+    const ticketRes = await fetch(`${process.env.REACT_APP_API_URL}/api/tickets/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        flight: flightId,
+        passenger: passenger._id,
+        booking: bookingId,
+        seatNumber,
+        price: ticketPrice, // <-- use the correct price here
+      }),
+    });
+    const ticketData = await ticketRes.json();
 
-      if (res.ok) {
-        setIsPaymentSuccessful(true);
-
-        
-        setTimeout(() => {
-          navigate('/booking-confirmation', {
-            state: {
-              passenger,
-              flightId,
-              userId,
-              price,
-              payment: data.payment,
-              ticket: data.ticket,
-            },
-          });
-        }, 1500);
-      } else {
-        alert(data.error || 'Payment failed. Please try again.');
-      }
-    } catch (err) {
-      console.error('Payment error:', err);
-      alert('Payment failed. Please try again.');
+    if (!ticketRes.ok) {
+      alert(ticketData.error || 'Ticket creation failed. Please try again.');
+      return;
     }
-  };
+
+    const ticket = ticketData;
+
+    // 4. Use the ticket's _id for payment
+    const paymentData = {
+      ticket: ticket._id,
+      amount: ticketPrice, // or price
+      paymentStatus: 'completed',
+    };
+
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/payments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(paymentData),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setIsPaymentSuccessful(true);
+
+      setTimeout(() => {
+        navigate('/booking-confirmation', {
+          state: {
+            passenger,
+            flightId,
+            userId,
+            passengerCount, // for passenger count
+            cabinClass, // for cabin class
+            bookingId,
+            ticket,
+            price: ticketPrice,
+            tax: bookingData.tax,
+            payment: data.payment,
+            ticket: data.ticket,
+          },
+        });
+      }, 1500);
+    } else {
+      alert(data.error || 'Payment failed. Please try again.');
+    }
+  } catch (err) {
+    console.error('Payment error:', err);
+    alert('Payment failed. Please try again.');
+  }
+};
 
   return (
     <div className="container my-5">

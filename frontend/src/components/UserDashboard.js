@@ -225,7 +225,12 @@ style={{
             <p><strong>To:</strong> {booking.flight.to}</p>
             <p><strong>Departure:</strong> {new Date(booking.flight.departure).toLocaleString()}</p>
             <p><strong>Arrival:</strong> {new Date(booking.flight.arrival).toLocaleString()}</p>
+            {/* <p><strong>Price per Passenger:</strong> ₱{booking.totalFare && booking.passengerCount ? (booking.totalFare / booking.passengerCount).toLocaleString() : 'N/A'}</p> */}
+            {/* <p><strong>Price per Passenger:</strong> ₱{booking.totalFare && booking.passengerCount ? (booking.totalFare / booking.passengerCount).toLocaleString() : 'N/A'}</p> */}
             <p><strong>Price:</strong> ₱{booking.flight.price}</p>
+            <p><strong>Tax (12% VAT):</strong> ₱{booking.totalFare ? (booking.totalFare / 1.12 * 0.12).toLocaleString() : 'N/A'}</p>
+            <p><strong>Total Price:</strong> ₱{booking.totalFare ? booking.totalFare.toLocaleString() : 'N/A'}</p>
+        <p><strong>Passengers:</strong> {booking.passengerCount}</p>
           </>
         ) : (
           <p>Flight details not available.</p>

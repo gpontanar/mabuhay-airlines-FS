@@ -57,6 +57,7 @@ exports.createBooking = async (req, res) => {
       promoFare,
       totalFare: finalTotalFare, 
       promoName, 
+      tax,
     });
 
     // Save the booking
