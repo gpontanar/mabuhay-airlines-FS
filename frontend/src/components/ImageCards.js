@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../index.css';
 import CenterBImage from '../assets/Center-b-image.jpg';
 import BoraImage from '../assets/Bora-1.jpg';
@@ -100,7 +101,7 @@ const destinations = [
 const ImageCards = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentDestination, setCurrentDestination] = useState(null);
-
+   const navigate = useNavigate(); 
   const handleShowMore = (destination) => {
     setCurrentDestination(destination);
     setShowModal(true);
@@ -139,7 +140,7 @@ const ImageCards = () => {
                   <h3>{destination.name}</h3>
                   <p>{destination.description}</p>
                   <div className="card-buttons">
-                    <button className="btn btn-primary">Book Now</button>
+                    <button className="btn btn-primary" onClick={() => navigate('/flights')}>Book Now</button>
                     <button
                       className="btn btn-secondary"
                       onClick={() => handleShowMore(destination)}

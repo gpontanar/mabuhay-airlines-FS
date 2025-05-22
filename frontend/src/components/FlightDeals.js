@@ -5,6 +5,7 @@ import promo2 from '../assets/FL-2.png';
 import promo3 from '../assets/FL-3.png';
 import promo4 from '../assets/FL-4.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 const deals = [
   {
@@ -30,6 +31,7 @@ const deals = [
 ];
 
 const FlightDeals = () => {
+  const navigate = useNavigate();
   return (
     <div id="flight-deals-section" className="flight-deals-section">
       <div className="overlay-heading">
@@ -45,7 +47,7 @@ const FlightDeals = () => {
               <div className="deal-overlay text-start">
                 <h3>{deal.title}</h3>
                 <p>{deal.description}</p>
-                <button className="book-now-btn">Book Now</button>
+                <button className="book-now-btn" onClick={() => navigate('/flights')}>Book Now</button>
               </div>
             </div>
           </div>
