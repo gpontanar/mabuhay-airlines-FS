@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import UserContext from '../context/UserContext';
+import UserContext from '../context/UserContext.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import airlineLogo from '../assets/Mabuhay-flight.png'; 

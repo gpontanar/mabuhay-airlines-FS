@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import UserContext from '../context/UserContext';
+import UserContext from '../context/UserContext.js';
 import Swal from 'sweetalert2';
 import { getAllFlights } from '../api';
-import FlightCard from './FlightCard';
+import FlightCard from './FlightCard.js';
 
 const AllFlights = () => {
   const [flights, setFlights] = useState([]);

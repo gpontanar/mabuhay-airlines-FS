@@ -4,9 +4,9 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 import { Notyf } from 'notyf';
 
-import UserContext from '../context/UserContext';
+import UserContext from '../context/UserContext.js';
 
-import ResetPassword from '../components/ResetPassword';
+import ResetPassword from '../components/ResetPassword.js';
 
 export default function Profile(){
 

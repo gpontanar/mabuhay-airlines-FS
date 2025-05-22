@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchFlightsData } from '../api'; 
-import FlightCard from './FlightCard';
+import FlightCard from './FlightCard.js';
 
 const SearchResults = () => {
   const location = useLocation();

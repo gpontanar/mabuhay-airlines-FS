@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllFlights, toggleArchiveFlight, getPassengersByFlight } from "../api";
-import FlightTable from "./FlightTable";
-import PassengerModal from './PassengerModal';
-import UserContext from '../context/UserContext';
+import FlightTable from "./FlightTable.js";
+import PassengerModal from './PassengerModal.js';
+import UserContext from '../context/UserContext.js';
 import Swal from 'sweetalert2'; // Import Swal for SweetAlert2 modals
 
 const AdminDashboard = () => {

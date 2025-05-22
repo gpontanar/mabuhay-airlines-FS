@@ -1,29 +1,29 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { UserProvider } from './context/UserContext';  // Import UserProvider
+import { UserProvider } from './context/UserContext.js';  // Import UserProvider
 
 
-import Home from "./pages/Home";
-import Login from './components/Login';
-import SignUpModal from './components/SignUp';
-import UserDashboard from './components/UserDashboard';
-import AppNavbar from './components/AppNavbar';
-import ImageCards from './components/ImageCards';
+import Home from "./pages/Home.js";
+import Login from './components/Login.js';
+import SignUpModal from './components/SignUp.js';
+import UserDashboard from './components/UserDashboard.js';
+import AppNavbar from './components/AppNavbar.js';
+import ImageCards from './components/ImageCards.js';
 
-import SearchResults from './components/SearchResults';
-import AllFlights from './components/AllFlights'
-import BookingFlight from './components/BookingFlight';
-import Passenger from './components/Passenger';
-import Payment from './components/Payment';
-import BookingConfirmation from './components/BookingConfirmation';
+import SearchResults from './components/SearchResults.js';
+import AllFlights from './components/AllFlights.js'
+import BookingFlight from './components/BookingFlight.js';
+import Passenger from './components/Passenger.js';
+import Payment from './components/Payment.js';
+import BookingConfirmation from './components/BookingConfirmation.js';
 
 // Admin
-import AdminDashboard from './components/AdminDashboard';
-import AddFlight from './components/AddFlight';
-import EditFlight from './components/EditFlight';
+import AdminDashboard from './components/AdminDashboard.js';
+import AddFlight from './components/AddFlight.js';
+import EditFlight from './components/EditFlight.js';
 
-import ProtectedRoute from './components/ProtectedRoute';
-import AdminRoute from './components/AdminRoute';
+import ProtectedRoute from './components/ProtectedRoute.js';
+import AdminRoute from './components/AdminRoute.js';
 
 function App() {
   return (

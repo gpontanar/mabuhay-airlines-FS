@@ -5,9 +5,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "../index.css";
 import airlinelogo from '../assets/mabuhay-logo.png';
 import { Modal, Button } from 'react-bootstrap';
-import Login from './Login';
-import SignUpForm from './SignUp';
-import UserContext from '../context/UserContext';
+import Login from './Login.js';
+import SignUpForm from './SignUp.js';
+import UserContext from '../context/UserContext.js';
 
 export default function AppNavbar() {
   const [showLogin, setShowLogin] = useState(false);
